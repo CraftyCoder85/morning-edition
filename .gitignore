@@ -1,0 +1,6 @@
+feeds_today.json
+fetch_err.log
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

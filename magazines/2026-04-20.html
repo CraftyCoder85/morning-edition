@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Morning Edition — 20 April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #111;
+    background: #f5f1e8;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 3px; }
+
+  .spread {
+    min-height: 100vh;
+    padding: clamp(40px, 6vw, 100px) clamp(24px, 6vw, 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .display { font-family: 'Fraunces', 'Times New Roman', serif; font-weight: 900; letter-spacing: -0.02em; line-height: 0.92; }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .for-you {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 2.5px solid currentColor;
+    border-radius: 2px;
+  }
+
+  /* ==================== COVER ==================== */
+  #cover {
+    background: linear-gradient(180deg, #f5f1e8 0%, #ead9b8 100%);
+    color: #1a1206;
+    padding: clamp(40px, 6vw, 80px);
+  }
+  #cover .flag { border-top: 3px solid #1a1206; border-bottom: 1px solid #1a1206; padding: 18px 0; display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; font-size: 18px; }
+  #cover .wordmark { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(100px, 18vw, 260px); line-height: 0.88; letter-spacing: -0.035em; margin-top: clamp(30px, 6vw, 80px); }
+  #cover .wordmark em { font-style: italic; }
+  #cover .subtitle { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(28px, 3.2vw, 48px); margin-top: 24px; max-width: 900px; line-height: 1.1; }
+  #cover .lede-row { margin-top: clamp(40px, 6vw, 80px); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  #cover .lede-row .hl { font-family: 'Fraunces', serif; font-weight: 700; font-size: 26px; line-height: 1.12; border-top: 1.5px solid #1a1206; padding-top: 14px; }
+  #cover .lede-row .meta { font-size: 15px; margin-top: 10px; opacity: 0.75; font-weight: 500; }
+  #cover .footer { margin-top: auto; padding-top: 60px; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500; border-top: 1px solid #1a1206; padding-top: 22px; }
+
+  /* ==================== 01 HERO ==================== */
+  #s01 { background: #d33c2c; color: #fff7ec; }
+  #s01 .rank { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 36vw, 540px); line-height: 0.8; letter-spacing: -0.05em; color: #fff7ec; opacity: 0.18; position: absolute; top: -40px; right: -30px; pointer-events: none; }
+  #s01 .section { color: #fff7ec; }
+  #s01 .kicker { font-size: 22px; font-weight: 700; margin-top: 36px; max-width: 600px; line-height: 1.1; }
+  #s01 h1 { font-size: clamp(60px, 9.5vw, 160px); margin-top: 40px; max-width: 1100px; }
+  #s01 h1 em { font-style: italic; font-weight: 600; }
+  #s01 .body { max-width: 720px; margin-top: 48px; font-size: 22px; line-height: 1.5; }
+  #s01 .body p + p { margin-top: 18px; }
+  #s01 .takeaway { margin-top: 40px; padding: 24px 28px; background: rgba(255,247,236,0.12); border-left: 5px solid #fff7ec; max-width: 720px; font-size: 20px; }
+  #s01 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 8px; }
+  #s01 .footer-bar { margin-top: 56px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ==================== 02 MIDNIGHT ==================== */
+  #s02 { background: #0a0e1a; color: #e8e2d0; }
+  #s02 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; min-height: 75vh; }
+  #s02 .rank-block { text-align: center; }
+  #s02 .rank-block .n { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(300px, 45vw, 600px); line-height: 0.85; color: transparent; -webkit-text-stroke: 2px #e8e2d0; letter-spacing: -0.04em; }
+  #s02 .rank-block .caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; margin-top: 20px; opacity: 0.7; }
+  #s02 .content .section { color: #c9a85c; }
+  #s02 .content h1 { font-size: clamp(44px, 5.5vw, 84px); margin-top: 24px; line-height: 0.96; }
+  #s02 .content .body { margin-top: 40px; font-size: 21px; line-height: 1.55; max-width: 640px; }
+  #s02 .content .body p + p { margin-top: 18px; }
+  #s02 .for-you { color: #c9a85c; margin-top: 30px; }
+  #s02 .takeaway { margin-top: 32px; padding: 24px; background: #101624; border: 1px solid #2a3042; font-size: 19px; }
+  #s02 .takeaway strong { display: block; color: #c9a85c; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; }
+  #s02 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  @media (max-width: 900px) { #s02 .grid { grid-template-columns: 1fr; gap: 20px; } #s02 .rank-block .n { font-size: 260px; } }
+
+  /* ==================== 03 TERMINAL ==================== */
+  #s03 { background: #0d1b0d; color: #a8e6a0; font-family: 'JetBrains Mono', monospace; padding-top: clamp(30px, 4vw, 60px); padding-bottom: clamp(30px, 4vw, 60px); }
+  #s03 .terminal-bar { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #112011; border-radius: 10px 10px 0 0; margin: 0 -20px; }
+  #s03 .terminal-bar .dot { width: 14px; height: 14px; border-radius: 50%; }
+  #s03 .terminal-bar .title { margin-left: 14px; font-size: 14px; opacity: 0.7; }
+  #s03 .terminal-body { background: #0d1b0d; border: 1px solid #1f3a1f; border-top: none; margin: 0 -20px; padding: clamp(24px, 4vw, 44px); border-radius: 0 0 10px 10px; }
+  #s03 .prompt-line { font-size: 20px; color: #7dff7d; }
+  #s03 .prompt-line::before { content: "$ "; color: #c9a85c; }
+  #s03 .num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(180px, 28vw, 380px); line-height: 0.9; color: #7dff7d; letter-spacing: -0.02em; margin-top: 30px; }
+  #s03 h1 { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(44px, 5.5vw, 76px); line-height: 1.0; color: #e8ffe8; letter-spacing: -0.02em; margin-top: 10px; max-width: 1100px; }
+  #s03 .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; border-top: 1px dashed #3a5a3a; border-bottom: 1px dashed #3a5a3a; padding: 30px 0; }
+  #s03 .stat-strip .stat-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: 1; color: #7dff7d; }
+  #s03 .stat-strip .stat-label { font-size: 14px; margin-top: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.12em; }
+  #s03 .body { font-family: 'JetBrains Mono', monospace; margin-top: 40px; font-size: 19px; line-height: 1.7; color: #c8e8c0; max-width: 820px; }
+  #s03 .body p + p { margin-top: 16px; }
+  #s03 .body .comment { color: #6b8f6b; }
+  #s03 .for-you { color: #7dff7d; border-color: #7dff7d; margin-top: 24px; font-family: 'Inter', sans-serif; }
+  #s03 .cite { margin-top: 40px; font-size: 14px; color: #6b8f6b; }
+  @media (max-width: 700px) { #s03 .stat-strip { grid-template-columns: 1fr; } }
+
+  /* ==================== 04 ACADEMIC DROP-CAP ==================== */
+  #s04 { background: #eee4c8; color: #2a2116; }
+  #s04 .rule { border-top: 4px double #2a2116; margin: 8px 0 40px; }
+  #s04 .masthead { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+  #s04 .num { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(140px, 22vw, 340px); text-align: center; line-height: 0.9; margin: 40px 0 20px; color: #2a2116; }
+  #s04 .num em { color: #8a2e13; font-style: italic; }
+  #s04 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 96px); line-height: 1.0; text-align: center; max-width: 1100px; margin: 0 auto; letter-spacing: -0.02em; }
+  #s04 .byline { text-align: center; font-size: 18px; font-style: italic; margin-top: 24px; font-family: 'Fraunces', serif; }
+  #s04 .for-you { display: block; margin: 30px auto; width: max-content; color: #8a2e13; }
+  #s04 .body { max-width: 840px; margin: 50px auto 0; font-size: 22px; line-height: 1.55; column-count: 1; }
+  #s04 .body p { margin-top: 0; text-indent: 0; }
+  #s04 .body p + p { margin-top: 18px; text-indent: 1.8em; }
+  #s04 .body .dropcap::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 7em;
+    float: left;
+    line-height: 0.86;
+    padding: 4px 16px 0 0;
+    color: #8a2e13;
+  }
+  #s04 .takeaway { max-width: 840px; margin: 40px auto 0; font-size: 20px; padding: 28px; border: 2px solid #2a2116; background: transparent; }
+  #s04 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
+  #s04 .cite { text-align: center; margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== 05 ROSE ALERT STAMP ==================== */
+  #s05 { background: #f7c9c0; color: #3a0f0a; }
+  #s05 .stamp-row { display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: flex-start; }
+  #s05 .stamp {
+    border: 6px solid #8a1e0c;
+    color: #8a1e0c;
+    padding: 18px 28px;
+    transform: rotate(-6deg);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  #s05 .section { color: #8a1e0c; margin-left: 0; }
+  #s05 .num-headline { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: flex-end; margin-top: 40px; }
+  #s05 .num { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(220px, 34vw, 460px); line-height: 0.8; color: #8a1e0c; letter-spacing: -0.05em; }
+  #s05 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 100px); line-height: 0.96; color: #3a0f0a; padding-bottom: 20px; letter-spacing: -0.02em; }
+  #s05 .body { margin-top: 40px; font-size: 22px; line-height: 1.5; max-width: 820px; }
+  #s05 .body p + p { margin-top: 18px; }
+  #s05 .actions { margin-top: 30px; font-size: 19px; background: #fde6e0; border-left: 5px solid #8a1e0c; padding: 22px 26px; max-width: 820px; }
+  #s05 .actions strong { display: block; color: #8a1e0c; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; }
+  #s05 .actions ul { list-style: none; padding: 0; }
+  #s05 .actions li { padding: 8px 0; border-bottom: 1px dashed #8a1e0c; }
+  #s05 .actions li:last-child { border-bottom: none; }
+  #s05 .actions li::before { content: "→  "; font-weight: 800; color: #8a1e0c; }
+  #s05 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a1e0c; }
+  @media (max-width: 800px) { #s05 .num-headline { grid-template-columns: 1fr; gap: 10px; } #s05 .num { font-size: 180px; } #s05 .stamp-row { grid-template-columns: 1fr; } }
+
+  /* ==================== 06 BAUHAUS BLOCK ==================== */
+  #s06 { background: #fbd441; color: #141414; padding: 0; min-height: 100vh; }
+  #s06 .grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; min-height: 100vh; gap: 0; }
+  #s06 .cell { padding: clamp(28px, 4vw, 60px); display: flex; flex-direction: column; justify-content: center; }
+  #s06 .cell-1 { background: #141414; color: #fbd441; }
+  #s06 .cell-1 .section { color: #fbd441; }
+  #s06 .cell-1 .n { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 30vw, 460px); line-height: 0.82; letter-spacing: -0.05em; }
+  #s06 .cell-2 { background: #d13a2b; color: #fff7ec; }
+  #s06 .cell-2 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5.5vw, 78px); line-height: 0.96; letter-spacing: -0.02em; }
+  #s06 .cell-2 .section { color: #fff7ec; margin-bottom: 20px; }
+  #s06 .cell-3 { background: #fbd441; color: #141414; }
+  #s06 .cell-3 .body { font-size: 21px; line-height: 1.55; }
+  #s06 .cell-3 .body p + p { margin-top: 18px; }
+  #s06 .cell-4 { background: #2b6ecb; color: #fff7ec; }
+  #s06 .cell-4 .stat { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(120px, 16vw, 220px); line-height: 0.9; letter-spacing: -0.04em; }
+  #s06 .cell-4 .stat-label { font-size: 20px; margin-top: 16px; font-weight: 600; max-width: 340px; line-height: 1.25; }
+  #s06 .cell-4 .cite { margin-top: 30px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8; }
+  @media (max-width: 800px) { #s06 .grid { grid-template-columns: 1fr; grid-template-rows: auto; min-height: auto; } #s06 .cell { min-height: 60vh; } }
+
+  /* ==================== 07 NEON ARCADE ==================== */
+  #s07 { background: #0a0a15; color: #ffffff; }
+  #s07 .banner { padding: 20px 28px; background: linear-gradient(90deg, #ff2d6b, #ff8c1a); font-weight: 900; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0a15; margin: 0 -28px 40px; }
+  #s07 .num-wrap { position: relative; margin: 20px 0; }
+  #s07 .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(240px, 38vw, 520px);
+    line-height: 0.82;
+    background: linear-gradient(180deg, #ff2d6b 0%, #ff8c1a 50%, #ffd84d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.05em;
+    text-shadow: 0 0 60px rgba(255, 45, 107, 0.4);
+  }
+  #s07 .section { color: #ff8c1a; }
+  #s07 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 6vw, 90px); line-height: 0.96; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(255, 140, 26, 0.3); }
+  #s07 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; color: #e8e8f0; }
+  #s07 .body p + p { margin-top: 18px; }
+  #s07 .ticker { margin-top: 40px; padding: 22px; background: #111128; border: 1px solid #ff2d6b; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  #s07 .ticker .symbol { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: #ff8c1a; letter-spacing: 0.12em; }
+  #s07 .ticker .price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 30px; margin-top: 6px; }
+  #s07 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a8aaa; }
+  @media (max-width: 700px) { #s07 .ticker { grid-template-columns: 1fr; } }
+
+  /* ==================== 08 NATURALIST JOURNAL ==================== */
+  #s08 { background: #e8ecd9; color: #2a3818; }
+  #s08 .journal-head { border-top: 2px solid #2a3818; border-bottom: 1px solid #2a3818; padding: 16px 0; display: flex; justify-content: space-between; font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; }
+  #s08 .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-top: 60px; align-items: start; }
+  #s08 .num { font-family: 'Fraunces', serif; font-weight: 300; font-style: italic; font-size: clamp(220px, 32vw, 420px); line-height: 0.85; color: #4d6620; letter-spacing: -0.02em; }
+  #s08 .num-caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; margin-top: 10px; opacity: 0.75; }
+  #s08 .section { color: #4d6620; margin-bottom: 24px; }
+  #s08 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(46px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.02em; }
+  #s08 h1 em { font-style: italic; font-weight: 600; }
+  #s08 .body { margin-top: 36px; font-size: 22px; line-height: 1.6; max-width: 720px; }
+  #s08 .body p + p { margin-top: 18px; }
+  #s08 .factoids { margin-top: 36px; border-top: 1px solid #2a3818; padding-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  #s08 .factoids .f-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(40px, 5vw, 72px); line-height: 1; color: #4d6620; }
+  #s08 .factoids .f-label { font-size: 16px; margin-top: 8px; font-style: italic; font-family: 'Fraunces', serif; line-height: 1.25; }
+  #s08 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+  @media (max-width: 800px) { #s08 .grid { grid-template-columns: 1fr; gap: 20px; } #s08 .num { font-size: 180px; } #s08 .factoids { grid-template-columns: 1fr; } }
+
+  /* ==================== 09 BIG STAT FINISH ==================== */
+  #s09 { background: #111214; color: #fff7ec; }
+  #s09 .topline { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(24px, 3vw, 38px); color: #e8c46c; margin-bottom: 28px; }
+  #s09 .monster { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(160px, 26vw, 440px); line-height: 0.86; letter-spacing: -0.05em; }
+  #s09 .monster .pct { color: #e8c46c; }
+  #s09 .monster-sub { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(28px, 3.5vw, 56px); margin-top: 20px; line-height: 1.05; max-width: 900px; }
+  #s09 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.96; margin-top: 40px; letter-spacing: -0.02em; }
+  #s09 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; }
+  #s09 .body p + p { margin-top: 18px; }
+  #s09 .section { color: #e8c46c; }
+  #s09 .ranked-stats { margin-top: 60px; border-top: 1px solid #3a3a42; padding-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  #s09 .rs .pct-sm { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5vw, 72px); line-height: 1; color: #e8c46c; }
+  #s09 .rs .lbl { font-size: 16px; margin-top: 10px; line-height: 1.3; }
+  #s09 .rank-badge { position: absolute; top: 40px; right: 40px; font-family: 'Fraunces', serif; font-weight: 900; font-size: 140px; line-height: 1; color: rgba(232, 196, 108, 0.18); }
+  #s09 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; }
+  @media (max-width: 800px) { #s09 .ranked-stats { grid-template-columns: 1fr 1fr; } }
+
+  /* ==================== 10 MANIFESTO FINALE ==================== */
+  #s10 { background: #f5f1e8; color: #0f0f0f; }
+  #s10 .num { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(380px, 60vw, 800px); line-height: 0.8; letter-spacing: -0.06em; color: #0f0f0f; }
+  #s10 .section { color: #0f0f0f; }
+  #s10 .tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(28px, 3.5vw, 52px); font-weight: 400; line-height: 1.05; max-width: 1100px; margin-top: 40px; }
+  #s10 h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(56px, 8vw, 130px); line-height: 0.94; letter-spacing: -0.03em; margin-top: 36px; max-width: 1200px; }
+  #s10 .rule-break { height: 6px; background: #0f0f0f; margin: 60px 0 40px; max-width: 240px; }
+  #s10 .body { font-size: 24px; line-height: 1.5; max-width: 820px; }
+  #s10 .body p + p { margin-top: 22px; }
+  #s10 .body strong { background: #fbd441; padding: 2px 6px; font-weight: 800; }
+  #s10 .for-you { margin-top: 40px; color: #8a1e0c; border-color: #8a1e0c; }
+  #s10 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== COLOPHON ==================== */
+  #colophon { background: #0f0f0f; color: #f5f1e8; padding: clamp(40px, 6vw, 100px); text-align: center; }
+  #colophon .wordmark { font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: clamp(48px, 7vw, 120px); line-height: 1; letter-spacing: -0.03em; }
+  #colophon p { font-size: 20px; line-height: 1.55; max-width: 640px; margin: 30px auto; }
+  #colophon .sources { margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; }
+
+  @media print {
+    .spread { page-break-after: always; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================== COVER =========================== -->
+<section id="cover" class="spread">
+  <div class="flag">
+    <span>Vol. 1 · No. 1</span>
+    <span>Monday, 20 April 2026</span>
+    <span>Kavi's Desk</span>
+  </div>
+  <h1 class="wordmark">Morning<br><em>Edition</em>.</h1>
+  <p class="subtitle">Ten stories worth your first coffee, curated from Hacker News, Reddit, Lobsters and the wires for the way you actually work.</p>
+
+  <div class="lede-row">
+    <div>
+      <div class="label">On the agenda</div>
+      <div class="hl">Iran walks away from Trump. Claude 4.7 rewrites its rules. Tech cuts 80,000 jobs in a quarter.</div>
+      <div class="meta">See pages 01 · 02 · 04</div>
+    </div>
+    <div>
+      <div class="label">For your inbox</div>
+      <div class="hl">Four stories flagged <em>directly actionable</em> for Tolani Group and ShelfBuddy.</div>
+      <div class="meta">Look for the <strong>FOR YOU</strong> stamp.</div>
+    </div>
+    <div>
+      <div class="label">And, because you asked</div>
+      <div class="hl">A robot just ran a half-marathon in 50:26. Eight million bees live under a cemetery. Solar has won.</div>
+      <div class="meta">Weird science · pages 07 · 08 · 09</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Assembled 07:00 local · 20 Apr 2026</span>
+    <span>Read in ~12 minutes</span>
+  </div>
+</section>
+
+<!-- =========================== 01 HERO =========================== -->
+<section id="s01" class="spread">
+  <div class="rank" aria-hidden="true">01</div>
+  <div class="label section">Front page · World · Markets</div>
+  <div class="kicker">Tehran just shut the door. Oil and equities are already reading the weather.</div>
+  <h1>Iran won't negotiate with an <em>"erratic"</em> Trump after genocidal threat.</h1>
+  <div class="body">
+    <p>Tehran publicly rejected fresh talks overnight after the White House signalled it would "blow up" Iran if demands were not met. Dow futures opened down ~400 points; Brent is bid; the Strait of Hormuz is back in every morning note.</p>
+    <p>The weekend's Pakistan-hosted backchannel is reportedly still alive, but Iran's foreign ministry framed the public position as "we retain control of Hormuz." Markets are pricing in a shock, not a war — yet.</p>
+  </div>
+  <div class="takeaway">
+    <strong>What it means for your day</strong>
+    Risk-off open. If ShelfBuddy has any FX exposure on supplier contracts, check hedges today. If consulting clients are FMCG with energy-linked COGS, expect panic emails by 10am.
+  </div>
+  <div class="footer-bar">
+    <span><a href="https://www.commondreams.org/news/iran-no-talks-trump-threats" target="_blank" rel="noopener">Common Dreams</a> · 12,133 upvotes, r/politics</span>
+    <span><a href="https://www.cnbc.com/2026/04/19/iran-says-talks-continue-while-it-retains-control-of-strait-of-hormuz-.html" target="_blank" rel="noopener">CNBC: Dow futures −400</a></span>
+  </div>
+</section>
+
+<!-- =========================== 02 MIDNIGHT =========================== -->
+<section id="s02" class="spread">
+  <div class="grid">
+    <div class="rank-block">
+      <div class="n">02</div>
+      <div class="caption">A diff, quietly shipped.</div>
+    </div>
+    <div class="content">
+      <div class="label section">AI · Tools · Read this first</div>
+      <h1>Claude just changed its mind about how to behave.</h1>
+      <span class="for-you">For You</span>
+      <div class="body">
+        <p>Simon Willison has dumped the diff between Claude Opus 4.6 and 4.7's system prompts. The 4.7 prompt is tighter, more explicit about when to refuse tool calls, and introduces new instructions on "executing actions with care" — read: Anthropic is pushing the model to pause before irreversible operations.</p>
+        <p>Real-world impact: agents that worked on Friday may feel noticeably more cautious by Monday lunch. Expect more "let me confirm" responses in Claude Code and more explicit tool-use preambles.</p>
+      </div>
+      <div class="takeaway">
+        <strong>Action today</strong>
+        Re-run your most-used Claude Code workflows. Anything that was borderline-auto-approved last week may now prompt. Update your hooks in <em>~/.claude/settings.json</em> to re-allow safe patterns.
+      </div>
+      <div class="cite">
+        <a href="https://simonwillison.net/2026/Apr/18/opus-system-prompt/" target="_blank" rel="noopener">simonwillison.net · 331 pts, 184 comments on HN</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 03 TERMINAL =========================== -->
+<section id="s03" class="spread">
+  <div class="terminal-bar">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <span class="title">morning-edition — bash — 04:58</span>
+  </div>
+  <div class="terminal-body">
+    <div class="prompt-line">cat story_03.txt</div>
+    <div class="num">03</div>
+    <h1>Give people AI, take it away, watch them fall off a cliff.</h1>
+    <span class="for-you">For You</span>
+    <div class="stat-strip">
+      <div><div class="stat-big">1,222</div><div class="stat-label">participants in the study</div></div>
+      <div><div class="stat-big">10 min</div><div class="stat-label">of AI use before withdrawal</div></div>
+      <div><div class="stat-big">−17%</div><div class="stat-label">post-withdrawal vs. control</div></div>
+    </div>
+    <div class="body">
+      <p><span class="comment"># the setup</span><br>
+      Researchers gave 1,222 people AI assistants for ten minutes on a reasoning task. Then they took them away. Performance did not revert to the control baseline. It dropped <em>below</em> it.</p>
+      <p><span class="comment"># why you should care</span><br>
+      Anyone building workflow dependencies on Claude, ChatGPT or Copilot now has evidence of a concrete tax the moment availability drops. The calculus isn't "does AI make me faster," it's "am I building skills that survive an outage."</p>
+      <p><span class="comment"># for ShelfBuddy and Tolani Group</span><br>
+      If your V1 process uses Claude for positioning, briefs, or classification, design a graceful degrade. Document prompt outputs, not the process itself. Keep the human in the loop on at least one end of every workflow.</p>
+    </div>
+    <div class="cite">r/artificial · 146 upvotes · discussion at <a href="https://www.reddit.com/r/artificial/comments/1sqcz1m/researchers_gave_1222_people_ai_assistants_then/" target="_blank" rel="noopener">reddit.com/r/artificial</a></div>
+  </div>
+</section>
+
+<!-- =========================== 04 ACADEMIC DROP-CAP =========================== -->
+<section id="s04" class="spread">
+  <div class="masthead">
+    <span>The Industry Papers</span>
+    <span>Q1 2026 · Report</span>
+    <span>Page 04</span>
+  </div>
+  <div class="rule"></div>
+  <div class="num"><em>IV.</em></div>
+  <div class="label" style="text-align:center; letter-spacing:0.25em;">Business · Labour markets</div>
+  <h1>Tech just cut eighty thousand jobs in a quarter — and half of them point at AI.</h1>
+  <div class="byline">By Tom's Hardware, reported 20 April 2026</div>
+  <span class="for-you">For You</span>
+  <div class="body">
+    <p class="dropcap">Eighty thousand positions disappeared from the tech industry in the first quarter of 2026 alone. According to fresh analysis from Tom's Hardware, roughly half of those cuts were explicitly attributed by employers to AI-driven restructuring, automation of junior roles, or efficiency programmes made possible by new model capabilities.</p>
+    <p>The composition matters. This is not the low-performance trimming of 2022-23. The cuts are landing on middle-weight knowledge work — content ops, QA, L1 support, marketing copy, junior analyst roles — the exact layer consultancies have traditionally sold into.</p>
+    <p>Read this alongside story 03 and a simpler picture emerges: the tools are getting more capable, the people who use them are getting better at using them, and the cost of replacing a process is falling fast.</p>
+  </div>
+  <div class="takeaway">
+    <strong>Tolani Group angle</strong>
+    This is a live consulting pitch, not a future one. FMCG brand teams are already quietly asking how to restructure content ops. Your next three outreach emails should name the Q1 numbers and offer a diagnostic, not a service menu.
+  </div>
+  <div class="cite">r/artificial · Tom's Hardware via <a href="https://www.tomshardware.com/tech-industry/tech-industry-lays-off-nearly-80-000-employees-in-the-first-quarter-of-2026-almost-50-percent-of-affected-positions-cut-due-to-ai" target="_blank" rel="noopener">tomshardware.com</a></div>
+</section>
+
+<!-- =========================== 05 ROSE ALERT =========================== -->
+<section id="s05" class="spread">
+  <div class="stamp-row">
+    <div class="stamp">Security · Act today</div>
+    <div>
+      <div class="label section">Front-end infrastructure</div>
+    </div>
+  </div>
+  <div class="num-headline">
+    <div class="num">05</div>
+    <h1>Vercel confirms breach. Hackers claim they're selling your logs.</h1>
+  </div>
+  <div class="body">
+    <p>Vercel confirmed an April 2026 security incident overnight — the attackers are publicly offering stolen data for sale. Details are thin, but the threat actors claim to hold build logs, environment variables and metadata scraped during the window.</p>
+    <p>Even if you don't host on Vercel, your dependencies might. The <em>netlify-deploy</em> folder on your desktop says you've shipped via at least one of the big front-end platforms. Rotate tokens before lunch.</p>
+  </div>
+  <div class="actions">
+    <strong>Do these four things today</strong>
+    <ul>
+      <li>Rotate any Vercel API tokens or deploy hooks used in the last 60 days</li>
+      <li>Audit environment variables exposed to Vercel preview builds — rotate anything sensitive</li>
+      <li>Check your Vercel team's audit log for unexpected logins or transfers</li>
+      <li>Enable SSO + 2FA if you haven't already (Vercel dashboard → Settings → Security)</li>
+    </ul>
+  </div>
+  <div class="cite"><a href="https://www.bleepingcomputer.com/news/security/vercel-confirms-breach-as-hackers-claim-to-be-selling-stolen-data/" target="_blank" rel="noopener">BleepingComputer</a> · 761 pts, 436 comments on HN</div>
+</section>
+
+<!-- =========================== 06 BAUHAUS =========================== -->
+<section id="s06" class="spread">
+  <div class="grid">
+    <div class="cell cell-1">
+      <div class="label section">Issue 06 · GameStop</div>
+      <div class="n">06</div>
+    </div>
+    <div class="cell cell-2">
+      <div class="label section">Brace position</div>
+      <h1>GameStop goes live on Power Packs. Brace for a volatile week.</h1>
+    </div>
+    <div class="cell cell-3">
+      <div class="label section">What's happening</div>
+      <div class="body">
+        <p>Power Packs — GameStop's new in-store bundle programme — went live this morning in the US, with Europe queued up next. The r/GME thread is 400+ strong and counting; Superstonk spent the weekend posting variants of "today's the day."</p>
+        <p>On the tape: Fidelity dropping Blackrock from a mandate (per retail chatter), 420 hitting on a Sunday-to-Monday flip, and the usual "volatile week — buckle up" energy from the diamond hands crowd.</p>
+        <p>None of this is investment advice. But your GME watchlist is about to earn its slot on the screen.</p>
+      </div>
+    </div>
+    <div class="cell cell-4">
+      <div class="stat">+409</div>
+      <div class="stat-label">upvotes on the Power Packs launch post, r/GME</div>
+      <div class="cite">r/GME · r/Superstonk · r/wallstreetbets</div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 07 NEON ARCADE =========================== -->
+<section id="s07" class="spread">
+  <div class="banner">Markets · Fortune favours the weird · 20 Apr 2026</div>
+  <div class="label section">Singularity watch · Beijing</div>
+  <div class="num-wrap"><div class="num">07</div></div>
+  <h1>A robot just finished a half-marathon in fifty minutes, twenty-six seconds.</h1>
+  <div class="body">
+    <p>At the Beijing robot half-marathon over the weekend, a bipedal humanoid crossed the line in <strong>50:26</strong>. The human world record, held by Jacob Kiplimo, is 57:20. Video of a pit-stop — ice to cool the battery, lubricant for the joints — has done four million views since Saturday.</p>
+    <p>Two things are true at once. This is a stunt. And: the last time a humanoid did anything resembling a half-marathon was a three-hour shuffling embarrassment, eighteen months ago. The gradient is what matters.</p>
+  </div>
+  <div class="ticker">
+    <div><div class="symbol">TIME · ROBOT</div><div class="price">50:26</div></div>
+    <div><div class="symbol">TIME · HUMAN WR</div><div class="price">57:20</div></div>
+    <div><div class="symbol">GAIN · 18 MONTHS</div><div class="price">≈ 3×</div></div>
+  </div>
+  <div class="cite">r/singularity · 3,905 upvotes · <a href="https://v.redd.it/09quxmn236wg1" target="_blank" rel="noopener">video</a></div>
+</section>
+
+<!-- =========================== 08 NATURALIST =========================== -->
+<section id="s08" class="spread">
+  <div class="journal-head">
+    <span><em>The Morning Naturalist</em> · Field Dispatch</span>
+    <span>Entry no. 08 · Curious finds</span>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="num">08</div>
+      <div class="num-caption">from the ground, up</div>
+    </div>
+    <div>
+      <div class="label section">Weird science · Natural history</div>
+      <h1>Eight million bees are living in a hidden <em>city</em> beneath a cemetery.</h1>
+      <div class="body">
+        <p>Discover Magazine reports on a network of underground chambers under a historic cemetery hosting an estimated eight million honeybees — one of the largest wild urban colonies documented in Europe this decade. The researchers found interconnected galleries, thermal stability within ±1°C year-round, and evidence the bees have been there for generations.</p>
+        <p>The charm is real. The story underneath is useful too: microclimates created by human infrastructure are quietly replacing the meadows we paved over. Worth a read the next time a brand brief asks you to write about "sustainability" in vague terms.</p>
+      </div>
+      <div class="factoids">
+        <div><div class="f-big">8M</div><div class="f-label">estimated bees in the network</div></div>
+        <div><div class="f-big">±1°C</div><div class="f-label">year-round chamber temperature</div></div>
+        <div><div class="f-big">G3</div><div class="f-label">generations observed in situ</div></div>
+      </div>
+      <div class="cite">Discover · 62 pts on HN · <a href="https://www.discovermagazine.com/up-to-8-million-bees-are-living-in-an-underground-network-beneath-this-cemetery-48977" target="_blank" rel="noopener">discovermagazine.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 09 BIG STAT FINISH =========================== -->
+<section id="s09" class="spread">
+  <div class="rank-badge">09</div>
+  <div class="topline">From the International Energy Agency, filed Saturday.</div>
+  <div class="monster">Solar <span class="pct">won.</span></div>
+  <div class="monster-sub">For the first time in measurable history, solar is the single largest source of electricity generation on the planet.</div>
+
+  <div class="label section" style="margin-top: 48px;">Weird science · Macro</div>
+  <h1>A quiet overtake that will reshape the next decade of pricing, trade and policy.</h1>
+  <div class="body">
+    <p>The IEA confirmed Saturday that global solar generation now exceeds every other source — including coal, gas and hydro — on a rolling-quarter basis. The crossover happened months earlier than the agency's own 2026 forecast, and reflects both cheaper panels and a genuine industrial shift in China, India and the US South-West.</p>
+    <p>Macro consequence: the 2030s marginal-cost curve for electricity is already being rewritten in Excel files at every energy desk in London this morning.</p>
+  </div>
+
+  <div class="ranked-stats">
+    <div class="rs"><div class="pct-sm">#1</div><div class="lbl">solar, global electricity source</div></div>
+    <div class="rs"><div class="pct-sm">6mo</div><div class="lbl">ahead of IEA's own 2026 forecast</div></div>
+    <div class="rs"><div class="pct-sm">60pts</div><div class="lbl">HN score · strong technical discussion</div></div>
+    <div class="rs"><div class="pct-sm">≫</div><div class="lbl">every other source, combined first place</div></div>
+  </div>
+  <div class="cite">Electrek via IEA · <a href="https://electrek.co/2026/04/19/iea-solar-overtakes-all-energy-sources-in-a-major-global-first/" target="_blank" rel="noopener">electrek.co</a></div>
+</section>
+
+<!-- =========================== 10 MANIFESTO =========================== -->
+<section id="s10" class="spread">
+  <div class="label section">Final page · Read slowly</div>
+  <div class="num">10.</div>
+  <div class="tagline">The single most-upvoted HN piece by a founder this weekend wasn't about models, scaling, or funding. It was a sentence:</div>
+  <h1>"Stop trying to engineer your way out of listening to people."</h1>
+  <span class="for-you">For You</span>
+  <div class="rule-break"></div>
+  <div class="body">
+    <p>The essay, from a product lead tired of dashboards, argues that the instinct to instrument, A/B, and segment has become a <strong>replacement</strong> for the uncomfortable work of asking a real customer what they wish were different. It's a 1,800-word mirror held up to every AI-assisted founder shipping in 2026.</p>
+    <p>For you specifically: ShelfBuddy does not yet have a revenue model that's been stress-tested by three real brand managers asking <strong>awkward questions</strong>. Tolani Group's outreach paralysis is a symptom of exactly this — building content, tools, positioning decks, anything to avoid the five uncomfortable conversations that would tell you if you have a consulting business or a very expensive hobby.</p>
+    <p>256 points and 114 comments. The top comment is one line: <em>"I read this. I'm going to go book two calls right now."</em></p>
+  </div>
+  <div class="cite"><a href="https://ashley.rolfmore.com/stop-trying-to-engineer-your-way-out-of-listening-to-people/" target="_blank" rel="noopener">ashley.rolfmore.com</a> · 256 pts, 114 comments on Hacker News</div>
+</section>
+
+<!-- =========================== COLOPHON =========================== -->
+<section id="colophon">
+  <div class="wordmark">— fin. —</div>
+  <p>The Morning Edition is assembled at 07:00 London from the Hacker News front page, Lobste.rs, Reddit, and selected news wires. Ten stories. No small fonts. No kittens. No sponsored slots.</p>
+  <p>If a story is flagged <strong>FOR YOU</strong>, it's because the curator thinks it has a direct bearing on ShelfBuddy, Tolani Group, or your workflow today.</p>
+  <div class="sources">Sources · Hacker News · Lobsters · Reddit · BBC · NYT · Electrek · Tom's Hardware · simonwillison.net</div>
+</section>
+
+</body>
+</html>
