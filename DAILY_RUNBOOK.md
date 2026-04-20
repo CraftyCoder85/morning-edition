@@ -22,6 +22,10 @@ If Reddit is 403-blocking, the fetcher falls through silently — proceed with w
 
 ## Step 2 · Curate the ten stories
 
+**Before you curate, read Kavi.** Load `~/.claude/CLAUDE.md` and, if they exist, `~/.claude/rules/identity.md`, `~/.claude/rules/projects.md`, `~/.claude/rules/content-voice.md`, and `~/.claude/rules/patterns.md`. These tell you who Kavi is (founder, Tolani Group + ShelfBuddy, 17y FMCG, ADHD, ships > polishes), what he's working on right now, and how he writes. The prose you write in this magazine should sound like something he'd send, not a Substack.
+
+Specifically: UK English, no em-dashes, short sentences, commercial over academic, tie stories to revenue / consulting / shipping where honest. Never hedge. If a story is boring, don't include it.
+
 Read `feeds_today.json`. Pick the top 10 that match Kavi's taste:
 
 - **AI tools** — high priority. Model releases, Claude/Anthropic news, workflow-changing tools, OSS models.
