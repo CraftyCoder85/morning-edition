@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Morning Edition, 12 August 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #111;
+    background: #f5f1e8;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 3px; }
+
+  .spread {
+    min-height: 100vh;
+    padding: clamp(40px, 6vw, 100px) clamp(24px, 6vw, 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .display { font-family: 'Fraunces', 'Times New Roman', serif; font-weight: 900; letter-spacing: -0.02em; line-height: 0.92; }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .for-you {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 2.5px solid currentColor;
+    border-radius: 2px;
+  }
+
+  /* ==================== COVER ==================== */
+  #cover {
+    background: linear-gradient(180deg, #f5f1e8 0%, #ead9b8 100%);
+    color: #1a1206;
+    padding: clamp(40px, 6vw, 80px);
+  }
+  #cover .flag { border-top: 3px solid #1a1206; border-bottom: 1px solid #1a1206; padding: 18px 0; display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; font-size: 18px; }
+  #cover .wordmark { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(100px, 18vw, 260px); line-height: 0.88; letter-spacing: -0.035em; margin-top: clamp(30px, 6vw, 80px); }
+  #cover .wordmark em { font-style: italic; }
+  #cover .subtitle { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(28px, 3.2vw, 48px); margin-top: 24px; max-width: 900px; line-height: 1.1; }
+  #cover .lede-row { margin-top: clamp(40px, 6vw, 80px); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  #cover .lede-row .hl { font-family: 'Fraunces', serif; font-weight: 700; font-size: 26px; line-height: 1.12; border-top: 1.5px solid #1a1206; padding-top: 14px; }
+  #cover .lede-row .meta { font-size: 15px; margin-top: 10px; opacity: 0.75; font-weight: 500; }
+  #cover .footer { margin-top: auto; padding-top: 60px; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500; border-top: 1px solid #1a1206; padding-top: 22px; }
+
+  /* ==================== 01 HERO ==================== */
+  #s01 { background: #d33c2c; color: #fff7ec; }
+  #s01 .rank { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 36vw, 540px); line-height: 0.8; letter-spacing: -0.05em; color: #fff7ec; opacity: 0.18; position: absolute; top: -40px; right: -30px; pointer-events: none; }
+  #s01 .section { color: #fff7ec; }
+  #s01 .kicker { font-size: 22px; font-weight: 700; margin-top: 36px; max-width: 600px; line-height: 1.1; }
+  #s01 h2 { font-size: clamp(60px, 9.5vw, 160px); margin-top: 40px; max-width: 1100px; }
+  #s01 h2 em { font-style: italic; font-weight: 600; }
+  #s01 .body { max-width: 720px; margin-top: 48px; font-size: 22px; line-height: 1.5; }
+  #s01 .body p + p { margin-top: 18px; }
+  #s01 .takeaway { margin-top: 40px; padding: 24px 28px; background: rgba(255,247,236,0.12); border-left: 5px solid #fff7ec; max-width: 720px; font-size: 20px; }
+  #s01 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 8px; }
+  #s01 .footer-bar { margin-top: 56px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ==================== 02 MIDNIGHT ==================== */
+  #s02 { background: #0a0e1a; color: #e8e2d0; }
+  #s02 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; min-height: 75vh; }
+  #s02 .rank-block { text-align: center; }
+  #s02 .rank-block .n { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(300px, 45vw, 600px); line-height: 0.85; color: transparent; -webkit-text-stroke: 2px #e8e2d0; letter-spacing: -0.04em; }
+  #s02 .rank-block .caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; margin-top: 20px; opacity: 0.7; }
+  #s02 .content .section { color: #c9a85c; }
+  #s02 .content h2 { font-size: clamp(44px, 5.5vw, 84px); margin-top: 24px; line-height: 0.96; }
+  #s02 .content .body { margin-top: 40px; font-size: 21px; line-height: 1.55; max-width: 640px; }
+  #s02 .content .body p + p { margin-top: 18px; }
+  #s02 .for-you { color: #c9a85c; margin-top: 30px; }
+  #s02 .takeaway { margin-top: 32px; padding: 24px; background: #101624; border: 1px solid #2a3042; font-size: 19px; }
+  #s02 .takeaway strong { display: block; color: #c9a85c; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; }
+  #s02 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  @media (max-width: 900px) { #s02 .grid { grid-template-columns: 1fr; gap: 20px; } #s02 .rank-block .n { font-size: 260px; } }
+
+  /* ==================== 03 TERMINAL ==================== */
+  #s03 { background: #0d1b0d; color: #a8e6a0; font-family: 'JetBrains Mono', monospace; padding-top: clamp(30px, 4vw, 60px); padding-bottom: clamp(30px, 4vw, 60px); }
+  #s03 .terminal-bar { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #112011; border-radius: 10px 10px 0 0; margin: 0 -20px; }
+  #s03 .terminal-bar .dot { width: 14px; height: 14px; border-radius: 50%; }
+  #s03 .terminal-bar .title { margin-left: 14px; font-size: 14px; opacity: 0.7; }
+  #s03 .terminal-body { background: #0d1b0d; border: 1px solid #1f3a1f; border-top: none; margin: 0 -20px; padding: clamp(24px, 4vw, 44px); border-radius: 0 0 10px 10px; }
+  #s03 .prompt-line { font-size: 20px; color: #7dff7d; }
+  #s03 .prompt-line::before { content: "$ "; color: #c9a85c; }
+  #s03 .num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(180px, 28vw, 380px); line-height: 0.9; color: #7dff7d; letter-spacing: -0.02em; margin-top: 30px; }
+  #s03 h2 { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(44px, 5.5vw, 76px); line-height: 1.0; color: #e8ffe8; letter-spacing: -0.02em; margin-top: 10px; max-width: 1100px; }
+  #s03 .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; border-top: 1px dashed #3a5a3a; border-bottom: 1px dashed #3a5a3a; padding: 30px 0; }
+  #s03 .stat-strip .stat-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: 1; color: #7dff7d; }
+  #s03 .stat-strip .stat-label { font-size: 14px; margin-top: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.12em; }
+  #s03 .body { font-family: 'JetBrains Mono', monospace; margin-top: 40px; font-size: 19px; line-height: 1.7; color: #c8e8c0; max-width: 820px; }
+  #s03 .body p + p { margin-top: 16px; }
+  #s03 .body .comment { color: #6b8f6b; }
+  #s03 .for-you { color: #7dff7d; border-color: #7dff7d; margin-top: 24px; font-family: 'Inter', sans-serif; }
+  #s03 .cite { margin-top: 40px; font-size: 14px; color: #6b8f6b; }
+  @media (max-width: 700px) { #s03 .stat-strip { grid-template-columns: 1fr; } }
+
+  /* ==================== 04 ACADEMIC DROP-CAP ==================== */
+  #s04 { background: #eee4c8; color: #2a2116; }
+  #s04 .rule { border-top: 4px double #2a2116; margin: 8px 0 40px; }
+  #s04 .masthead { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+  #s04 .num { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(140px, 22vw, 340px); text-align: center; line-height: 0.9; margin: 40px 0 20px; color: #2a2116; }
+  #s04 .num em { color: #8a2e13; font-style: italic; }
+  #s04 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 96px); line-height: 1.0; text-align: center; max-width: 1100px; margin: 0 auto; letter-spacing: -0.02em; }
+  #s04 .byline { text-align: center; font-size: 18px; font-style: italic; margin-top: 24px; font-family: 'Fraunces', serif; }
+  #s04 .for-you { display: block; margin: 30px auto; width: max-content; color: #8a2e13; }
+  #s04 .body { max-width: 840px; margin: 50px auto 0; font-size: 22px; line-height: 1.55; column-count: 1; }
+  #s04 .body p { margin-top: 0; text-indent: 0; }
+  #s04 .body p + p { margin-top: 18px; text-indent: 1.8em; }
+  #s04 .body .dropcap::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 7em;
+    float: left;
+    line-height: 0.86;
+    padding: 4px 16px 0 0;
+    color: #8a2e13;
+  }
+  #s04 .takeaway { max-width: 840px; margin: 40px auto 0; font-size: 20px; padding: 28px; border: 2px solid #2a2116; background: transparent; }
+  #s04 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
+  #s04 .cite { text-align: center; margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== 05 ROSE ALERT STAMP ==================== */
+  #s05 { background: #f7c9c0; color: #3a0f0a; }
+  #s05 .stamp-row { display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: flex-start; }
+  #s05 .stamp {
+    border: 6px solid #8a1e0c;
+    color: #8a1e0c;
+    padding: 18px 28px;
+    transform: rotate(-6deg);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  #s05 .section { color: #8a1e0c; margin-left: 0; }
+  #s05 .for-you { color: #8a1e0c; margin-top: 26px; }
+  #s05 .num-headline { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: flex-end; margin-top: 40px; }
+  #s05 .num { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(220px, 34vw, 460px); line-height: 0.8; color: #8a1e0c; letter-spacing: -0.05em; }
+  #s05 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 100px); line-height: 0.96; color: #3a0f0a; padding-bottom: 20px; letter-spacing: -0.02em; }
+  #s05 .body { margin-top: 40px; font-size: 22px; line-height: 1.5; max-width: 820px; }
+  #s05 .body p + p { margin-top: 18px; }
+  #s05 .actions { margin-top: 30px; font-size: 19px; background: #fde6e0; border-left: 5px solid #8a1e0c; padding: 22px 26px; max-width: 820px; }
+  #s05 .actions strong { display: block; color: #8a1e0c; letter-spacing: 0.2em; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; }
+  #s05 .actions ul { list-style: none; padding: 0; }
+  #s05 .actions li { padding: 8px 0; border-bottom: 1px dashed #8a1e0c; }
+  #s05 .actions li:last-child { border-bottom: none; }
+  #s05 .actions li::before { content: "→  "; font-weight: 800; color: #8a1e0c; }
+  #s05 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a1e0c; }
+  @media (max-width: 800px) { #s05 .num-headline { grid-template-columns: 1fr; gap: 10px; } #s05 .num { font-size: 180px; } #s05 .stamp-row { grid-template-columns: 1fr; } }
+
+  /* ==================== 06 BAUHAUS BLOCK ==================== */
+  #s06 { background: #fbd441; color: #141414; padding: 0; min-height: 100vh; }
+  #s06 .grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; min-height: 100vh; gap: 0; }
+  #s06 .cell { padding: clamp(28px, 4vw, 60px); display: flex; flex-direction: column; justify-content: center; }
+  #s06 .cell-1 { background: #141414; color: #fbd441; }
+  #s06 .cell-1 .section { color: #fbd441; }
+  #s06 .cell-1 .n { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 30vw, 460px); line-height: 0.82; letter-spacing: -0.05em; }
+  #s06 .cell-2 { background: #d13a2b; color: #fff7ec; }
+  #s06 .cell-2 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5.5vw, 78px); line-height: 0.96; letter-spacing: -0.02em; }
+  #s06 .cell-2 .section { color: #fff7ec; margin-bottom: 20px; }
+  #s06 .cell-2 .for-you { margin-top: 26px; }
+  #s06 .cell-3 { background: #fbd441; color: #141414; }
+  #s06 .cell-3 .body { font-size: 21px; line-height: 1.55; }
+  #s06 .cell-3 .body p + p { margin-top: 18px; }
+  #s06 .cell-4 { background: #2b6ecb; color: #fff7ec; }
+  #s06 .cell-4 .stat { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(120px, 16vw, 220px); line-height: 0.9; letter-spacing: -0.04em; }
+  #s06 .cell-4 .stat-label { font-size: 20px; margin-top: 16px; font-weight: 600; max-width: 340px; line-height: 1.25; }
+  #s06 .cell-4 .cite { margin-top: 30px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8; }
+  @media (max-width: 800px) { #s06 .grid { grid-template-columns: 1fr; grid-template-rows: auto; min-height: auto; } #s06 .cell { min-height: 60vh; } }
+
+  /* ==================== 07 NEON ARCADE ==================== */
+  #s07 { background: #0a0a15; color: #ffffff; }
+  #s07 .banner { padding: 20px 28px; background: linear-gradient(90deg, #ff2d6b, #ff8c1a); font-weight: 900; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0a15; margin: 0 -28px 40px; }
+  #s07 .num-wrap { position: relative; margin: 20px 0; }
+  #s07 .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(240px, 38vw, 520px);
+    line-height: 0.82;
+    background: linear-gradient(180deg, #ff2d6b 0%, #ff8c1a 50%, #ffd84d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.05em;
+    text-shadow: 0 0 60px rgba(255, 45, 107, 0.4);
+  }
+  #s07 .section { color: #ff8c1a; }
+  #s07 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 6vw, 90px); line-height: 0.96; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(255, 140, 26, 0.3); }
+  #s07 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; color: #e8e8f0; }
+  #s07 .body p + p { margin-top: 18px; }
+  #s07 .ticker { margin-top: 40px; padding: 22px; background: #111128; border: 1px solid #ff2d6b; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  #s07 .ticker .symbol { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: #ff8c1a; letter-spacing: 0.12em; }
+  #s07 .ticker .price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 30px; margin-top: 6px; }
+  #s07 .cite { margin-top: 40px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a8aaa; }
+  @media (max-width: 700px) { #s07 .ticker { grid-template-columns: 1fr; } }
+
+  /* ==================== 08 NATURALIST JOURNAL ==================== */
+  #s08 { background: #e8ecd9; color: #2a3818; }
+  #s08 .journal-head { border-top: 2px solid #2a3818; border-bottom: 1px solid #2a3818; padding: 16px 0; display: flex; justify-content: space-between; font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; }
+  #s08 .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-top: 60px; align-items: start; }
+  #s08 .num { font-family: 'Fraunces', serif; font-weight: 300; font-style: italic; font-size: clamp(220px, 32vw, 420px); line-height: 0.85; color: #4d6620; letter-spacing: -0.02em; }
+  #s08 .num-caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; margin-top: 10px; opacity: 0.75; }
+  #s08 .section { color: #4d6620; margin-bottom: 24px; }
+  #s08 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(46px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.02em; }
+  #s08 h2 em { font-style: italic; font-weight: 600; }
+  #s08 .body { margin-top: 36px; font-size: 22px; line-height: 1.6; max-width: 720px; }
+  #s08 .body p + p { margin-top: 18px; }
+  #s08 .factoids { margin-top: 36px; border-top: 1px solid #2a3818; padding-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  #s08 .factoids .f-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(40px, 5vw, 72px); line-height: 1; color: #4d6620; }
+  #s08 .factoids .f-label { font-size: 16px; margin-top: 8px; font-style: italic; font-family: 'Fraunces', serif; line-height: 1.25; }
+  #s08 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+  @media (max-width: 800px) { #s08 .grid { grid-template-columns: 1fr; gap: 20px; } #s08 .num { font-size: 180px; } #s08 .factoids { grid-template-columns: 1fr; } }
+
+  /* ==================== 09 BIG STAT FINISH ==================== */
+  #s09 { background: #111214; color: #fff7ec; }
+  #s09 .topline { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(24px, 3vw, 38px); color: #e8c46c; margin-bottom: 28px; }
+  #s09 .monster { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(160px, 26vw, 440px); line-height: 0.86; letter-spacing: -0.05em; }
+  #s09 .monster .pct { color: #e8c46c; }
+  #s09 .monster-sub { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(28px, 3.5vw, 56px); margin-top: 20px; line-height: 1.05; max-width: 900px; }
+  #s09 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.96; margin-top: 40px; letter-spacing: -0.02em; }
+  #s09 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; }
+  #s09 .body p + p { margin-top: 18px; }
+  #s09 .section { color: #e8c46c; }
+  #s09 .ranked-stats { margin-top: 60px; border-top: 1px solid #3a3a42; padding-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  #s09 .rs .pct-sm { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5vw, 72px); line-height: 1; color: #e8c46c; }
+  #s09 .rs .lbl { font-size: 16px; margin-top: 10px; line-height: 1.3; }
+  #s09 .rank-badge { position: absolute; top: 40px; right: 40px; font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(60px, 10vw, 140px); line-height: 1; color: rgba(232, 196, 108, 0.18); pointer-events: none; }
+  #s09 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; }
+  @media (max-width: 800px) { #s09 .ranked-stats { grid-template-columns: 1fr 1fr; } #s09 .rank-badge { top: 20px; right: 20px; } }
+
+  /* ==================== 10 MANIFESTO FINALE ==================== */
+  #s10 { background: #f5f1e8; color: #0f0f0f; }
+  #s10 .num { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(380px, 60vw, 800px); line-height: 0.8; letter-spacing: -0.06em; color: #0f0f0f; }
+  #s10 .section { color: #0f0f0f; }
+  #s10 .tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(28px, 3.5vw, 52px); font-weight: 400; line-height: 1.05; max-width: 1100px; margin-top: 40px; }
+  #s10 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(56px, 8vw, 130px); line-height: 0.94; letter-spacing: -0.03em; margin-top: 36px; max-width: 1200px; }
+  #s10 .rule-break { height: 6px; background: #0f0f0f; margin: 60px 0 40px; max-width: 240px; }
+  #s10 .body { font-size: 24px; line-height: 1.5; max-width: 820px; }
+  #s10 .body p + p { margin-top: 22px; }
+  #s10 .body strong { background: #fbd441; padding: 2px 6px; font-weight: 800; }
+  #s10 .for-you { margin-top: 40px; color: #8a1e0c; border-color: #8a1e0c; }
+  #s10 .cite { margin-top: 50px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== COLOPHON ==================== */
+  #colophon { background: #0f0f0f; color: #f5f1e8; padding: clamp(40px, 6vw, 100px); text-align: center; }
+  #colophon .wordmark { font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: clamp(48px, 7vw, 120px); line-height: 1; letter-spacing: -0.03em; }
+  #colophon p { font-size: 20px; line-height: 1.55; max-width: 640px; margin: 30px auto; }
+  #colophon .sources { margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; }
+
+  @media print {
+    .spread { page-break-after: always; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================== COVER =========================== -->
+<section id="cover" class="spread">
+  <div class="flag">
+    <span>Vol. 1 · No. 2</span>
+    <span>Wednesday, 12 August 2026</span>
+    <span>Kavi's Desk</span>
+  </div>
+  <h1 class="wordmark">Morning<br><em>Edition</em>.</h1>
+  <p class="subtitle">Inflation cooled, two frontier models landed without a press release, and the Moon takes a bite out of the Sun over your house today.</p>
+
+  <div class="lede-row">
+    <div>
+      <div class="label">On the agenda</div>
+      <div class="hl">US inflation eases to 3.4% while the Fed argues about <em>raising</em> rates. DeepSeek and Qwen both ship on the same morning.</div>
+      <div class="meta">See pages 01 · 02 · 07</div>
+    </div>
+    <div>
+      <div class="label">For your inbox</div>
+      <div class="hl">Four stories flagged <em>directly actionable</em> for Tolani Group and ShelfBuddy.</div>
+      <div class="meta">Look for the <strong>FOR YOU</strong> stamp.</div>
+    </div>
+    <div>
+      <div class="label">And, because you asked</div>
+      <div class="hl">An AI wrote sixteen viruses that had never existed. Capybaras walked into a parliament. Britain gets its best eclipse since 1999.</div>
+      <div class="meta">Weird science · pages 04 · 08</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Assembled 18:32 London · 12 Aug 2026</span>
+    <span>Read in ~12 minutes</span>
+  </div>
+</section>
+
+<!-- =========================== 01 HERO =========================== -->
+<section id="s01" class="spread">
+  <div class="rank" aria-hidden="true">01</div>
+  <div class="label section">Front page · Macro · Markets</div>
+  <div class="kicker">Prices cooled in July. The argument inside the Fed is now about putting rates up, not bringing them down.</div>
+  <h2>Inflation slows to <em>3.4%</em>, and the Fed still has its finger near the trigger.</h2>
+  <div class="body">
+    <p>Annual US inflation dipped to 3.4% in July as food and fuel costs slowed, with housing keeping the headline stickier than the Fed would like. The New York Times read is blunter than the number: benign data buys the Fed time, but the live debate is whether to <em>raise</em>, and that debate is not settled.</p>
+    <p>The reason sits in the Gulf. The war with Iran has whipped oil around all quarter, and Gulf exporters are now spending billions building routes that avoid the Strait of Hormuz entirely. Andy Burnham has already warned that the conflict could dent UK growth next year through fuel prices and supply chains.</p>
+  </div>
+  <div class="takeaway">
+    <strong>What it means for your day</strong>
+    Any 2027 client plan built on falling rates and calm freight is now built on sand. If a Tolani deck has a cost-of-goods assumption in it, put a sensitivity line under it this week. For ShelfBuddy, expect brand partners to squeeze trade spend before they squeeze anything else, which is exactly when a cheaper route to shelf gets a hearing.
+  </div>
+  <div class="footer-bar">
+    <span><a href="https://www.bbc.co.uk/news/articles/c0qv2nn1gpeo" target="_blank" rel="noopener">BBC: US inflation eases</a></span>
+    <span><a href="https://www.nytimes.com/2026/08/12/business/economy/inflation-federal-reserve-interest-rates.html" target="_blank" rel="noopener">NYT: reprieve for the Fed</a> · <a href="https://www.nytimes.com/2026/08/12/business/iran-war-hormuz-oil.html" target="_blank" rel="noopener">Hormuz workarounds</a></span>
+  </div>
+</section>
+
+<!-- =========================== 02 MIDNIGHT =========================== -->
+<section id="s02" class="spread">
+  <div class="grid">
+    <div class="rank-block">
+      <div class="n" aria-hidden="true">02</div>
+      <div class="caption">two frontier drops, no press release</div>
+    </div>
+    <div class="content">
+      <div class="label section">AI · Tools · Read this first</div>
+      <h2>DeepSeek and Qwen both shipped this morning. Neither said a word.</h2>
+      <span class="for-you">For You</span>
+      <div class="body">
+        <p>DeepSeek V4 Pro 0813 turned up on OpenRouter and inside DeepSeek's own responses-API docs within hours of each other, and was top of Hacker News before most of the US had woken up. The same morning, Qwen pushed Qwen3.8-2.4T-A95B to Hugging Face: a 2.4 trillion parameter mixture-of-experts with roughly 95 billion active per token.</p>
+        <p>Two open-weight releases at frontier scale, on the same day, announced by a model card and a docs page. That is the release cadence now. If you wait for the blog post you are a fortnight behind.</p>
+      </div>
+      <div class="takeaway">
+        <strong>Action today</strong>
+        Route one batch of mechanical work, file extraction, tagging, rewrite passes, through DeepSeek V4 Pro on OpenRouter and compare cost per finished task against your current default. Keep Claude on the judgement work. After July's subagent bill, mechanical volume is precisely the workload to price-shop.
+      </div>
+      <div class="cite">
+        <a href="https://openrouter.ai/deepseek/deepseek-v4-pro-0813" target="_blank" rel="noopener">openrouter.ai</a> · 199 pts on HN · <a href="https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B" target="_blank" rel="noopener">huggingface.co</a> · 182 pts
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 03 TERMINAL =========================== -->
+<section id="s03" class="spread">
+  <div class="terminal-bar">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <span class="title">morning-edition — bash — 18:32</span>
+  </div>
+  <div class="terminal-body">
+    <div class="prompt-line">cat story_03.txt</div>
+    <div class="num" aria-hidden="true">03</div>
+    <h2>A sixteen-year-old SQLite bug was quietly eating production databases.</h2>
+    <div class="stat-strip">
+      <div><div class="stat-big">16y</div><div class="stat-label">the bug sat there undetected</div></div>
+      <div><div class="stat-big">380</div><div class="stat-label">points on Hacker News by lunch</div></div>
+      <div><div class="stat-big">WAL</div><div class="stat-label">the reset path at fault</div></div>
+    </div>
+    <div class="body">
+      <p><span class="comment"># what happened</span><br>
+      Tailscale chased a run of database corruption across its own fleet and landed on a write-ahead-log reset bug in SQLite that has been in the code for roughly sixteen years. Not a race in their application. Not a bad disk. The database itself.</p>
+      <p><span class="comment"># why you should care</span><br>
+      SQLite is the most widely deployed database on the planet. It is under your phone, your browser, most of your desktop apps, and a growing slice of edge and serverless tooling. A quiet corruption path is exactly the sort of thing that produces the bug nobody can reproduce and everybody blames on the user.</p>
+      <p><span class="comment"># the transferable lesson</span><br>
+      "It has been in production for years" is not evidence of correctness. It is evidence that nobody looked. The same applies to your own quiet infrastructure: the digest build, the outreach scripts, the kanban sync. A backup you have never restored is not a backup, it is a hope.</p>
+    </div>
+    <div class="cite">tailscale.com · 380 pts, 55 comments · <a href="https://tailscale.com/blog/sqlite-wal-reset-bug" target="_blank" rel="noopener">read the writeup</a></div>
+  </div>
+</section>
+
+<!-- =========================== 04 ACADEMIC DROP-CAP =========================== -->
+<section id="s04" class="spread">
+  <div class="masthead">
+    <span>The Sky Papers</span>
+    <span>12 August 2026</span>
+    <span>Page 04</span>
+  </div>
+  <div class="rule"></div>
+  <div class="num" aria-hidden="true"><em>IV.</em></div>
+  <div class="label" style="text-align:center; letter-spacing:0.25em;">Science · Look up</div>
+  <h2>The deepest eclipse Britain has seen since 1999 happens over your head today.</h2>
+  <div class="byline">Reported by the BBC and the New York Times, 12 August 2026</div>
+  <div class="body">
+    <p class="dropcap">Up to 96 per cent of the Sun will be covered by the Moon over parts of the UK today, the deepest partial eclipse these islands have had since August 1999. Spain, Portugal, Iceland, Greenland and parts of Russia sit under the path of totality, where the sky goes properly dark in the middle of the day.</p>
+    <p>Cloud is the only real enemy and the Scottish forecast is already grim. If the weather closes in, someone has built an aggregator of live webcams along the totality path and parked it on the Hacker News front page, which is the sensible fallback. In Spain, one astrophysicist went home to her remote village to run an impromptu science class and found several hundred ravers had chosen the same field.</p>
+    <p>Then keep tonight free as well. The Perseids peak this evening into tomorrow morning, on a moonless sky the night after a solar eclipse. Two proper celestial events inside eighteen hours is not a normal Wednesday.</p>
+  </div>
+  <div class="takeaway">
+    <strong>One rule, and one for the boys</strong>
+    Do not look at a partial eclipse without certified eclipse glasses, and do not point a phone camera at the Sun unless you fancy buying a new sensor. Pinhole projection through a cereal box costs nothing, works perfectly, and is the sort of thing children remember for thirty years.
+  </div>
+  <div class="cite"><a href="https://www.bbc.co.uk/news/articles/cx2jr1ew2v1o" target="_blank" rel="noopener">bbc.co.uk</a> · <a href="https://www.nytimes.com/2026/08/11/science/perseids-meteor-shower.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://jonty.github.io/2026_eclipse_webcams/" target="_blank" rel="noopener">eclipse webcams, 376 pts on HN</a></div>
+</section>
+
+<!-- =========================== 05 ROSE ALERT =========================== -->
+<section id="s05" class="spread">
+  <div class="stamp-row">
+    <div class="stamp">Security · Act today</div>
+    <div>
+      <div class="label section">Infrastructure · Your stack</div>
+      <span class="for-you">For You</span>
+    </div>
+  </div>
+  <div class="num-headline">
+    <div class="num" aria-hidden="true">05</div>
+    <h2>Someone is scanning the internet wearing ClaudeBot's face.</h2>
+  </div>
+  <div class="body">
+    <p>Known Agents has published evidence of mass vulnerability scanning where the traffic spoofs the user agents of AI crawlers, ClaudeBot among them. If your site allows or blocks by user agent string alone, you are now making security decisions based on a line of text that anybody can type.</p>
+    <p>It was that sort of morning. GitHub declared an incident on Pull Requests and Issues, so if a push looked broken today it probably was. Researchers demonstrated a device hijack through Zoom screen sharing, and a public AI tool found the flaw in under twenty prompts. On the better side, Chrome has shipped device-bound session credentials, the strongest defence yet against stolen-cookie account takeover.</p>
+  </div>
+  <div class="actions">
+    <strong>Do these four things today</strong>
+    <ul>
+      <li>Verify crawler traffic on the Lucky Goods Club and ShelfBuddy sites by reverse DNS or published IP range, never by user agent string</li>
+      <li>Scan Netlify and Cloudflare logs for scan bursts claiming to be ClaudeBot or GPTBot, and rate-limit the pattern rather than the name</li>
+      <li>Update Chrome everywhere so device-bound session credentials are actually switched on</li>
+      <li>If any client shares price-sensitive material over Zoom screen share, forward the advisory before their next board call</li>
+    </ul>
+  </div>
+  <div class="cite"><a href="https://knownagents.com/insights" target="_blank" rel="noopener">knownagents.com</a> · 118 pts on HN · <a href="https://www.githubstatus.com/incidents/76t89hbfb09h" target="_blank" rel="noopener">githubstatus.com</a> · <a href="https://arstechnica.com/security/2026/08/researchers-found-a-way-to-hijack-devices-through-zoom-screen-sharing/" target="_blank" rel="noopener">arstechnica.com</a></div>
+</section>
+
+<!-- =========================== 06 BAUHAUS =========================== -->
+<section id="s06" class="spread">
+  <div class="grid">
+    <div class="cell cell-1">
+      <div class="label section">Issue 06 · The AI bill</div>
+      <div class="n" aria-hidden="true">06</div>
+    </div>
+    <div class="cell cell-2">
+      <div class="label section">Pricing</div>
+      <h2>Nobody knows how to charge for AI. Nobody knows how to budget for it either.</h2>
+      <span class="for-you">For You</span>
+    </div>
+    <div class="cell cell-3">
+      <div class="label section">What's happening</div>
+      <div class="body">
+        <p>The BBC's piece on tokenomics lands on the problem you met the hard way in July. Buyers cannot tell what a job will cost before they run it. Sellers cannot price a product whose unit cost moves with model choice, context length, and how talkative the agent decides to be that afternoon.</p>
+        <p>So vendors drift from per-seat to per-token to outcome pricing and back again, and buyers respond by capping spend, batching work, and pushing mechanical tasks to cheaper models. Which is the correct response, and almost nobody has written it down.</p>
+        <p>There is a consulting product hiding in here. FMCG marketing teams are signing AI content tools with no unit economics and no ceiling. A one-page audit answering "what does this actually cost us per asset" would sell tomorrow, and you have the scar tissue to write it.</p>
+      </div>
+    </div>
+    <div class="cell cell-4">
+      <div class="stat">?</div>
+      <div class="stat-label">the cost per finished AI task, as most buyers currently know it</div>
+      <div class="cite"><a href="https://www.bbc.co.uk/news/articles/c872r52x7jgo" target="_blank" rel="noopener">bbc.co.uk · Tokenomics</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 07 NEON ARCADE =========================== -->
+<section id="s07" class="spread">
+  <div class="banner">Markets · Melt-up watch · 12 Aug 2026</div>
+  <div class="label section">Wall Street · Euphoria</div>
+  <div class="num-wrap"><div class="num" aria-hidden="true">07</div></div>
+  <h2>Wall Street is partying like it is 1999, and it knows it.</h2>
+  <div class="body">
+    <p>MarketWatch's lead is a straight warning shot: Nvidia, Intel and Google have dragged the market into the giddy atmosphere anyone with a long memory recognises from the dot-com years. Super Micro beat and guided high, and the analyst notes still open by asking how long the momentum can possibly last. SpaceX stock is rallying on its AI business rather than its rockets.</p>
+    <p>The plumbing is getting stranger than the prices. Prediction market firms are flagging suspected insider traders and almost none of them will face charges, because the regulator has neither the staff nor the tools. Meanwhile Trump is being sued over a Truth Social tier that sold early access to his market-moving posts for a hundred thousand dollars a head. Price discovery now has a queue, and the queue has a paywall.</p>
+  </div>
+  <div class="ticker">
+    <div><div class="symbol">CPI · JULY, YOY</div><div class="price">3.4%</div></div>
+    <div><div class="symbol">TRUTH SOCIAL · EARLY ACCESS</div><div class="price">$100k</div></div>
+    <div><div class="symbol">PREVAILING VIBE</div><div class="price">1999</div></div>
+  </div>
+  <div class="cite"><a href="https://www.marketwatch.com/story/nvidia-intel-google-wall-street-is-partying-like-its-1999-8520c1e3" target="_blank" rel="noopener">marketwatch.com</a> · <a href="https://www.nytimes.com/2026/08/12/us/politics/prediction-markets-insider-trading.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://www.bbc.co.uk/news/articles/cq6dpm5y0yyo" target="_blank" rel="noopener">bbc.co.uk</a></div>
+</section>
+
+<!-- =========================== 08 NATURALIST =========================== -->
+<section id="s08" class="spread">
+  <div class="journal-head">
+    <span><em>The Morning Naturalist</em> · Field Dispatch</span>
+    <span>Entry no. 08 · Curious finds</span>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="num" aria-hidden="true">08</div>
+      <div class="num-caption">life, written to order</div>
+    </div>
+    <div>
+      <div class="label section">Weird science · Biology</div>
+      <h2>An AI wrote sixteen <em>viruses</em> that had never existed. All sixteen worked.</h2>
+      <div class="body">
+        <p>Scientists trained a model on libraries of DNA, then asked it to write recipes for viral genomes. Sixteen of the results were viable and produced real, functioning viruses found nowhere in nature. They target bacteria, which is the reassuring half of the sentence. The method is the other half.</p>
+        <p>Read it alongside the rest of the week's field notes. Capybaras wandered into a state legislature in Mato Grosso and, by all accounts, conducted themselves better than the members. A separate study argues that faeces fuelled the burst of complexity in the Cambrian. Nature has not lost its sense of humour.</p>
+      </div>
+      <div class="factoids">
+        <div><div class="f-big">16</div><div class="f-label">viable viruses generated from scratch</div></div>
+        <div><div class="f-big">0</div><div class="f-label">of them previously found in nature</div></div>
+        <div><div class="f-big">DNA</div><div class="f-label">the only training material required</div></div>
+      </div>
+      <div class="cite"><a href="https://www.nytimes.com/2026/08/06/science/ai-viruses-bacteria-arc.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://arstechnica.com/science/2026/08/feces-fueled-a-flurry-of-evolution-during-the-cambrian-study-suggests/" target="_blank" rel="noopener">arstechnica.com</a> · <a href="https://www.nytimes.com/2026/08/06/world/americas/capybara-brazil-legislature.html" target="_blank" rel="noopener">the capybaras</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 09 BIG STAT FINISH =========================== -->
+<section id="s09" class="spread">
+  <div class="rank-badge" aria-hidden="true">09</div>
+  <div class="topline">From The Verge, filed this week.</div>
+  <div class="monster">A billion <span class="pct">each.</span></div>
+  <div class="monster-sub">ChatGPT and Gemini have both passed a billion monthly users. Gemini is the fourteenth Google product to get there.</div>
+
+  <div class="label section" style="margin-top: 48px;">AI · Scale</div>
+  <h2>The assistant market stopped being a niche while everyone argued about benchmarks.</h2>
+  <div class="body">
+    <p>Sundar Pichai posted that a billion people now use Gemini every month, making it Google's fastest-growing product. OpenAI is at the same line with ChatGPT. Two products have reached social-network scale in about three years rather than ten, and the daily discourse is still about which one wins a coding benchmark.</p>
+    <p>Underneath, the industry is churning hard. Brad Lightcap has left OpenAI after eight years. Grok has launched always-on bot "teammates" you assign work to, each with its own cloud machine. And Thrive Holdings has raised two billion dollars specifically to buy service businesses and rebuild them around AI, which is a direct, funded bet against the traditional agency and consultancy model.</p>
+  </div>
+
+  <div class="ranked-stats">
+    <div class="rs"><div class="pct-sm">1bn</div><div class="lbl">monthly Gemini users, per Pichai</div></div>
+    <div class="rs"><div class="pct-sm">14th</div><div class="lbl">Google product to pass a billion</div></div>
+    <div class="rs"><div class="pct-sm">$2bn</div><div class="lbl">raised by Thrive to buy service firms and automate them</div></div>
+    <div class="rs"><div class="pct-sm">$13.3bn</div><div class="lbl">Lovable's new valuation, double last year's</div></div>
+  </div>
+  <div class="cite"><a href="https://www.theverge.com/ai-artificial-intelligence/978113/chatgpt-gemini-1-billion-users" target="_blank" rel="noopener">theverge.com</a> · <a href="https://www.nytimes.com/2026/08/12/business/dealbook/thrive-holdings-ai-funding.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://lovable.dev/blog/series-c" target="_blank" rel="noopener">lovable.dev</a></div>
+</section>
+
+<!-- =========================== 10 MANIFESTO =========================== -->
+<section id="s10" class="spread">
+  <div class="label section">Final page · Read slowly</div>
+  <div class="num" aria-hidden="true">10.</div>
+  <div class="tagline">The most argued-over post on Hacker News today, 395 points and 329 comments, is a single sentence that anyone running a services business should read as a warning shot:</div>
+  <h2>"AI is removing the middle class of software engineering."</h2>
+  <span class="for-you">For You</span>
+  <div class="rule-break"></div>
+  <div class="body">
+    <p>The argument runs like this. Juniors were cheap and are being absorbed by tooling. Seniors are scarce and are getting more valuable. The comfortable middle, the competent implementer who turned a clear brief into working output, is squeezed from both ends. Three hundred and twenty-nine comments, and most of them argue about <strong>how fast</strong>, not whether.</p>
+    <p>Swap "software engineering" for "marketing services" and the sentence survives intact. The middle of your market is the agency that takes a clear brief and returns competent execution. That is exactly the layer Thrive Holdings just raised two billion dollars to buy and automate, page 09.</p>
+    <p>The two defensible ends are the two you already own. Judgement at the top: seventeen years of knowing which FMCG launches fail and why, which no model has lived through. Product at the bottom: ShelfBuddy, where the work is done once and sold many times. Anything in between that bills by the hour for competent execution is on <strong>borrowed time</strong>. Price the judgement, ship the product, and stop quoting for the middle.</p>
+  </div>
+  <div class="cite"><a href="https://blog.florianherrengt.com/ai-removing-middle-class-software-engineering.html" target="_blank" rel="noopener">blog.florianherrengt.com</a> · 395 pts, 329 comments on Hacker News</div>
+</section>
+
+<!-- =========================== COLOPHON =========================== -->
+<section id="colophon">
+  <div class="wordmark">— fin. —</div>
+  <p>The Morning Edition is assembled from the Hacker News front page, Lobste.rs, Reddit and selected news wires. Ten stories. No small fonts. No kittens. No sponsored slots.</p>
+  <p>Today's issue ran on Hacker News and the wires alone. All twelve subreddits returned 403 and Lobste.rs is serving an expired certificate, so there is no GameStop or r/wallstreetbets read in this edition. Both should recover without help.</p>
+  <p>If a story carries the <strong>FOR YOU</strong> stamp, the curator believes it has a direct bearing on ShelfBuddy, Tolani Group, or your workflow today.</p>
+  <div class="sources">Sources · Hacker News · BBC · New York Times · Ars Technica · The Verge · MarketWatch · Tailscale · Known Agents</div>
+</section>
+
+</body>
+</html>
