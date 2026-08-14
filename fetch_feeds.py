@@ -1,7 +1,7 @@
 """Fetch candidate stories for the Morning Edition.
 
 Sources (in priority order):
-  1. Hacker News top 30 (firebase api — very reliable)
+  1. Hacker News top 30 (firebase api, very reliable)
   2. Lobste.rs hottest (tech / AI leaning, reliable)
   3. Reddit hot posts for Kavi's subs (best-effort; often 403s unauth'd)
   4. Reuters / BBC / NYT RSS feeds (politics, markets, weird science)
@@ -139,6 +139,12 @@ def fetch_reddit(sub: str, n: int = 8):
         except (URLError, HTTPError, TimeoutError, json.JSONDecodeError) as e:
             last_err = str(e)
             time.sleep(1.5)
+        except Exception as e:
+            # Reddit is best-effort and flaky (403s, malformed JSON, unexpected
+            # schema changes). Never let one subreddit's oddity crash the whole
+            # 7am run - log it and move on to the next host/sub.
+            last_err = f"{type(e).__name__}: {e}"
+            time.sleep(1.5)
     return [{"source": "reddit", "sub": sub, "error": last_err}]
 
 
@@ -215,25 +221,42 @@ def main():
         "rss": {},
     }
 
-    hn = fetch_hn(30)
-    out["hackernews"] = hn.get("items", [])
-    if "error" in hn:
-        out["hackernews_error"] = hn["error"]
+    # Every section below is individually best-effort: if one source misbehaves
+    # in a way its own fetch_* function didn't anticipate, log the failure into
+    # the output and keep going. The 7am contract with update_index.py / the
+    # curation step depends on this script ALWAYS emitting valid JSON to
+    # stdout, even in a worst-case run where every source fails.
+    try:
+        hn = fetch_hn(30)
+        out["hackernews"] = hn.get("items", [])
+        if "error" in hn:
+            out["hackernews_error"] = hn["error"]
+    except Exception as e:
+        out["hackernews_error"] = f"{type(e).__name__}: {e}"
 
-    lob = fetch_lobsters(20)
-    out["lobsters"] = lob.get("items", [])
-    if "error" in lob:
-        out["lobsters_error"] = lob["error"]
+    try:
+        lob = fetch_lobsters(20)
+        out["lobsters"] = lob.get("items", [])
+        if "error" in lob:
+            out["lobsters_error"] = lob["error"]
+    except Exception as e:
+        out["lobsters_error"] = f"{type(e).__name__}: {e}"
 
     for sub in SUBS:
-        out["reddit"][sub] = fetch_reddit(sub, 8)
+        try:
+            out["reddit"][sub] = fetch_reddit(sub, 8)
+        except Exception as e:
+            out["reddit"][sub] = [{"source": "reddit", "sub": sub, "error": f"{type(e).__name__}: {e}"}]
         time.sleep(1.2)
 
     for name, url in RSS_FEEDS.items():
-        feed = fetch_rss(name, url, 10)
-        out["rss"][name] = feed.get("items", [])
-        if "error" in feed:
-            out["rss"][name] = [{"error": feed["error"]}]
+        try:
+            feed = fetch_rss(name, url, 10)
+            out["rss"][name] = feed.get("items", [])
+            if "error" in feed:
+                out["rss"][name] = [{"error": feed["error"]}]
+        except Exception as e:
+            out["rss"][name] = [{"error": f"{type(e).__name__}: {e}"}]
         time.sleep(0.3)
 
     if hasattr(sys.stdout, "reconfigure"):
