@@ -12,15 +12,23 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
 import sys
 import time
+from base64 import b64encode
 from html.parser import HTMLParser
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
 UA = "python:morning-edition:1.0 (by /u/CraftyCoder85)"
+
+# Reddit hard-blocks the unauthenticated .json endpoints (403 Blocked) regardless
+# of user agent, but still serves the per-subreddit Atom feeds to a browser UA.
+# Probed 2026-08-14: www .json = 403, old .json = 403, www /hot/.rss = 200.
+BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
 
 SUBS = [
     "artificial", "OpenAI", "LocalLLaMA", "singularity",
@@ -43,12 +51,16 @@ RSS_FEEDS = {
 }
 
 
-def fetch_bytes(url: str, timeout: int = 20, accept: str = "*/*") -> bytes:
-    req = Request(url, headers={
-        "User-Agent": UA,
+def fetch_bytes(url: str, timeout: int = 20, accept: str = "*/*", ua: str = UA,
+                token: str | None = None) -> bytes:
+    headers = {
+        "User-Agent": ua,
         "Accept": accept,
         "Accept-Language": "en-US,en;q=0.9",
-    })
+    }
+    if token:
+        headers["Authorization"] = f"bearer {token}"
+    req = Request(url, headers=headers)
     with urlopen(req, timeout=timeout) as resp:
         return resp.read()
 
@@ -110,41 +122,114 @@ def fetch_lobsters(n: int = 20):
     return {"items": out}
 
 
-# ---------------- Reddit (best-effort) ----------------
+# ---------------- Reddit ----------------
+
+def reddit_token():
+    """App-only OAuth token, or None if credentials are not configured.
+
+    Set REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET in the environment. Create the
+    pair at https://www.reddit.com/prefs/apps (type: "script"). This lifts the
+    limit to ~100 requests/minute AND restores score and comment counts, which
+    the curation step ranks on. Without it we fall back to Atom feeds.
+    """
+    cid = os.environ.get("REDDIT_CLIENT_ID")
+    secret = os.environ.get("REDDIT_CLIENT_SECRET")
+    if not (cid and secret):
+        return None
+    body = urlencode({"grant_type": "client_credentials"}).encode()
+    basic = b64encode(f"{cid}:{secret}".encode()).decode()
+    req = Request(
+        "https://www.reddit.com/api/v1/access_token",
+        data=body,
+        headers={"Authorization": f"Basic {basic}", "User-Agent": UA},
+    )
+    try:
+        with urlopen(req, timeout=20) as resp:
+            return json.loads(resp.read().decode("utf-8", "replace")).get("access_token")
+    except Exception:
+        return None
+
+
+def fetch_reddit_oauth(sub: str, token: str, n: int = 8):
+    """Authenticated pull. Returns the rich shape: score, comments, selftext."""
+    raw = fetch_bytes(
+        f"https://oauth.reddit.com/r/{sub}/hot?limit={n}",
+        accept="application/json",
+        ua=UA,
+        token=token,
+    )
+    data = json.loads(raw.decode("utf-8", "replace"))
+    posts = []
+    for child in data.get("data", {}).get("children", []):
+        p = child.get("data", {})
+        if p.get("stickied"):
+            continue
+        posts.append({
+            "source": "reddit",
+            "sub": sub,
+            "id": p.get("id"),
+            "title": p.get("title", ""),
+            "url": p.get("url_overridden_by_dest") or f"https://www.reddit.com{p.get('permalink','')}",
+            "permalink": f"https://www.reddit.com{p.get('permalink','')}",
+            "score": p.get("score", 0),
+            "comments": p.get("num_comments", 0),
+            "selftext": (p.get("selftext", "") or "")[:600],
+            "flair": p.get("link_flair_text") or "",
+        })
+    return posts
+
 
 def fetch_reddit(sub: str, n: int = 8):
+    """Pull a subreddit's hot posts via its Atom feed.
+
+    The .json API returns 403 Blocked unauthenticated, whatever user agent you
+    send. The Atom feed still serves to a browser UA, so that is the route.
+    Trade-off: Atom gives no score or comment count, so curation ranks these on
+    title and recency alone. To get scores back, register a Reddit "script" app
+    and swap this for an OAuth client_credentials call to oauth.reddit.com.
+
+    Anonymous Reddit tolerates roughly one request a minute before it 429s, so
+    main() paces this route hard and caps the total sweep. On a 429 we back off
+    once and retry rather than giving up on the sub.
+    """
+    url = f"https://www.reddit.com/r/{sub}/hot/.rss?limit={n}"
     last_err = None
-    for host in ("www.reddit.com", "old.reddit.com"):
-        url = f"https://{host}/r/{sub}/hot.json?limit={n}"
+    for attempt in range(2):
         try:
-            data = fetch_json(url)
+            raw = fetch_bytes(
+                url,
+                accept="application/atom+xml, application/xml, text/xml, */*",
+                ua=BROWSER_UA,
+            )
+            txt = raw.decode("utf-8", errors="replace")
             posts = []
-            for child in data.get("data", {}).get("children", []):
-                p = child.get("data", {})
-                if p.get("stickied"):
+            for block in _RSS_ENTRY_RE.findall(txt)[:n]:
+                title = _tag(block, "title")
+                link = _attr_tag(block, "link", "href")
+                if not (title and link):
                     continue
                 posts.append({
                     "source": "reddit",
                     "sub": sub,
-                    "id": p.get("id"),
-                    "title": p.get("title", ""),
-                    "url": p.get("url_overridden_by_dest") or f"https://www.reddit.com{p.get('permalink','')}",
-                    "permalink": f"https://www.reddit.com{p.get('permalink','')}",
-                    "score": p.get("score", 0),
-                    "comments": p.get("num_comments", 0),
-                    "selftext": (p.get("selftext", "") or "")[:600],
-                    "flair": p.get("link_flair_text") or "",
+                    "title": title[:400],
+                    "url": link,
+                    "permalink": link,
+                    "author": _tag(block, "name"),
+                    "published": _tag(block, "updated") or _tag(block, "published"),
+                    "score": None,       # not exposed by the Atom feed
+                    "comments": None,    # not exposed by the Atom feed
                 })
-            return posts
-        except (URLError, HTTPError, TimeoutError, json.JSONDecodeError) as e:
+            if posts:
+                return posts
+            last_err = "atom feed parsed to zero entries"
+        except (URLError, HTTPError, TimeoutError) as e:
             last_err = str(e)
-            time.sleep(1.5)
         except Exception as e:
-            # Reddit is best-effort and flaky (403s, malformed JSON, unexpected
-            # schema changes). Never let one subreddit's oddity crash the whole
-            # 7am run - log it and move on to the next host/sub.
+            # Reddit is best-effort and flaky. Never let one subreddit's oddity
+            # crash the whole 7am run - log it and move on.
             last_err = f"{type(e).__name__}: {e}"
-            time.sleep(1.5)
+        if attempt == 0:
+            time.sleep(6)
     return [{"source": "reddit", "sub": sub, "error": last_err}]
 
 
@@ -242,12 +327,32 @@ def main():
     except Exception as e:
         out["lobsters_error"] = f"{type(e).__name__}: {e}"
 
+    # Authenticated if credentials are set, anonymous Atom feeds otherwise.
+    # The two routes have very different budgets: OAuth allows ~100 req/min,
+    # anonymous RSS allows roughly one per minute before it starts 429ing, so
+    # the unauthenticated sweep is paced and capped rather than run to the end.
+    token = reddit_token()
+    out["reddit_route"] = "oauth" if token else "anonymous-atom"
+    anon_deadline = time.time() + 300  # 5 min ceiling on the anonymous sweep
+
     for sub in SUBS:
+        if token:
+            try:
+                out["reddit"][sub] = fetch_reddit_oauth(sub, token, 8)
+            except Exception as e:
+                out["reddit"][sub] = [{"source": "reddit", "sub": sub, "error": f"{type(e).__name__}: {e}"}]
+            time.sleep(0.8)
+            continue
+
+        if time.time() > anon_deadline:
+            out["reddit"][sub] = [{"source": "reddit", "sub": sub,
+                                   "error": "skipped: anonymous rate-limit budget exhausted"}]
+            continue
         try:
             out["reddit"][sub] = fetch_reddit(sub, 8)
         except Exception as e:
             out["reddit"][sub] = [{"source": "reddit", "sub": sub, "error": f"{type(e).__name__}: {e}"}]
-        time.sleep(1.2)
+        time.sleep(20.0)
 
     for name, url in RSS_FEEDS.items():
         try:

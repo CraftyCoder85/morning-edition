@@ -18,7 +18,24 @@ py fetch_feeds.py > feeds_today.json 2> fetch_err.log
 
 Sources pulled: Hacker News top 30, Lobste.rs hottest, 12 subreddits (r/artificial, r/OpenAI, r/LocalLLaMA, r/singularity, r/politics, r/wallstreetbets, r/stocks, r/Superstonk, r/GME, r/science, r/Futurology, r/technology), plus 9 RSS feeds (BBC US politics/business/science, NYT politics/business/science, Ars Technica, The Verge AI, MarketWatch top).
 
-If Reddit is 403-blocking, the fetcher falls through silently — proceed with whatever sources responded. Never fail the run because one source is down.
+If a source is down, the fetcher falls through silently. Proceed with whatever responded. Never fail the run because one source is down.
+
+### Reddit access (updated 14 Aug 2026)
+
+Reddit hard-blocks the unauthenticated `.json` endpoints with `403 Blocked`, whatever user agent you send. Both `www.` and `old.` are blocked. Do not spend time trying user agent tricks; it was probed and it does not work.
+
+The fetcher now has two routes and picks automatically. Check `reddit_route` in the JSON output to see which ran.
+
+**Preferred: OAuth (`reddit_route: "oauth"`).** Set two environment variables:
+
+```bash
+setx REDDIT_CLIENT_ID "your_id"
+setx REDDIT_CLIENT_SECRET "your_secret"
+```
+
+Create the pair at https://www.reddit.com/prefs/apps, app type **script**, redirect URI `http://localhost:8080` (unused but required). This gives ~100 requests/minute, all 12 subs every run, and restores `score` and `comments`, which the curation step ranks on. Never commit the credentials.
+
+**Fallback: anonymous Atom feeds (`reddit_route: "anonymous-atom"`).** `https://www.reddit.com/r/<sub>/hot/.rss` still returns 200 to a browser user agent, but anonymous Reddit tolerates roughly one request a minute. The fetcher paces at 20s per sub with a 5 minute ceiling, which lands about 6 of 12 subs on a typical run, chosen by luck rather than priority. Atom carries no score or comment count, so rank those stories on title and recency and do not invent point totals for them.
 
 ## Step 2 · Curate the ten stories
 
