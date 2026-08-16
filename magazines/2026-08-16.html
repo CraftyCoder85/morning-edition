@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Morning Edition, 16 August 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #111;
+    background: #f5f1e8;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 3px; }
+
+  .spread {
+    min-height: 100vh;
+    padding: clamp(40px, 6vw, 100px) clamp(24px, 6vw, 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .display { font-family: 'Fraunces', 'Times New Roman', serif; font-weight: 900; letter-spacing: -0.02em; line-height: 0.92; }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  .label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .for-you {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 2.5px solid currentColor;
+    border-radius: 2px;
+  }
+
+  /* ==================== COVER ==================== */
+  #cover {
+    background: linear-gradient(180deg, #f5f1e8 0%, #e4cfc0 100%);
+    color: #2a1408;
+    padding: clamp(40px, 6vw, 80px);
+  }
+  #cover .flag { border-top: 3px solid #2a1408; border-bottom: 1px solid #2a1408; padding: 18px 0; display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; font-size: 18px; }
+  #cover .wordmark { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(100px, 18vw, 260px); line-height: 0.88; letter-spacing: -0.035em; margin-top: clamp(30px, 6vw, 80px); }
+  #cover .wordmark em { font-style: italic; }
+  #cover .subtitle { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(28px, 3.2vw, 48px); margin-top: 24px; max-width: 900px; line-height: 1.1; }
+  #cover .lede-row { margin-top: clamp(40px, 6vw, 80px); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  #cover .lede-row .hl { font-family: 'Fraunces', serif; font-weight: 700; font-size: 26px; line-height: 1.12; border-top: 1.5px solid #2a1408; padding-top: 14px; }
+  #cover .lede-row .meta { font-size: 16px; margin-top: 10px; opacity: 0.75; font-weight: 500; }
+  #cover .footer { margin-top: auto; padding-top: 60px; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500; border-top: 1px solid #2a1408; padding-top: 22px; }
+
+  /* ==================== 01 HERO ==================== */
+  #s01 { background: #a3320b; color: #fff7ec; }
+  #s01 .rank { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 36vw, 540px); line-height: 0.8; letter-spacing: -0.05em; color: #fff7ec; opacity: 0.18; position: absolute; top: -40px; right: -30px; pointer-events: none; }
+  #s01 .section { color: #fff7ec; }
+  #s01 .kicker { font-size: 22px; font-weight: 700; margin-top: 36px; max-width: 640px; line-height: 1.1; }
+  #s01 h2 { font-size: clamp(60px, 9.5vw, 160px); margin-top: 40px; max-width: 1100px; font-family: 'Fraunces', serif; font-weight: 900; letter-spacing: -0.02em; line-height: 0.92; }
+  #s01 h2 em { font-style: italic; font-weight: 600; }
+  #s01 .body { max-width: 720px; margin-top: 48px; font-size: 22px; line-height: 1.5; }
+  #s01 .body p + p { margin-top: 18px; }
+  #s01 .takeaway { margin-top: 40px; padding: 24px 28px; background: rgba(255,247,236,0.12); border-left: 5px solid #fff7ec; max-width: 720px; font-size: 20px; }
+  #s01 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 15px; text-transform: uppercase; margin-bottom: 8px; }
+  #s01 .footer-bar { margin-top: 56px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ==================== 02 MIDNIGHT ==================== */
+  #s02 { background: #0a0e1a; color: #e8e2d0; }
+  #s02 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; min-height: 75vh; }
+  #s02 .rank-block { text-align: center; }
+  #s02 .rank-block .n { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(300px, 45vw, 600px); line-height: 0.85; color: transparent; -webkit-text-stroke: 2px #e8e2d0; letter-spacing: -0.04em; }
+  #s02 .rank-block .caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; margin-top: 20px; opacity: 0.7; }
+  #s02 .content .section { color: #c9a85c; }
+  #s02 .content h2 { font-family: 'Fraunces', serif; font-weight: 900; letter-spacing: -0.02em; font-size: clamp(44px, 5.5vw, 84px); margin-top: 24px; line-height: 0.96; }
+  #s02 .content .body { margin-top: 40px; font-size: 21px; line-height: 1.55; max-width: 640px; }
+  #s02 .content .body p + p { margin-top: 18px; }
+  #s02 .for-you { color: #c9a85c; margin-top: 30px; }
+  #s02 .takeaway { margin-top: 32px; padding: 24px; background: #101624; border: 1px solid #2a3042; font-size: 19px; }
+  #s02 .takeaway strong { display: block; color: #c9a85c; letter-spacing: 0.2em; font-size: 15px; text-transform: uppercase; margin-bottom: 10px; }
+  #s02 .cite { margin-top: 40px; font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+  @media (max-width: 900px) { #s02 .grid { grid-template-columns: 1fr; gap: 20px; } #s02 .rank-block .n { font-size: 260px; } }
+
+  /* ==================== 03 TERMINAL ==================== */
+  #s03 { background: #0d1b0d; color: #a8e6a0; font-family: 'JetBrains Mono', monospace; padding-top: clamp(30px, 4vw, 60px); padding-bottom: clamp(30px, 4vw, 60px); }
+  #s03 .terminal-bar { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #112011; border-radius: 10px 10px 0 0; margin: 0 -20px; }
+  #s03 .terminal-bar .dot { width: 14px; height: 14px; border-radius: 50%; }
+  #s03 .terminal-bar .title { margin-left: 14px; font-size: 15px; opacity: 0.7; }
+  #s03 .terminal-body { background: #0d1b0d; border: 1px solid #1f3a1f; border-top: none; margin: 0 -20px; padding: clamp(24px, 4vw, 44px); border-radius: 0 0 10px 10px; }
+  #s03 .prompt-line { font-size: 20px; color: #7dff7d; }
+  #s03 .prompt-line::before { content: "$ "; color: #c9a85c; }
+  #s03 .num { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(180px, 28vw, 380px); line-height: 0.9; color: #7dff7d; letter-spacing: -0.02em; margin-top: 30px; }
+  #s03 h2 { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(44px, 5.5vw, 76px); line-height: 1.0; color: #e8ffe8; letter-spacing: -0.02em; margin-top: 10px; max-width: 1100px; }
+  #s03 .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; border-top: 1px dashed #3a5a3a; border-bottom: 1px dashed #3a5a3a; padding: 30px 0; }
+  #s03 .stat-strip .stat-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: 1; color: #7dff7d; }
+  #s03 .stat-strip .stat-label { font-size: 15px; margin-top: 12px; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.12em; }
+  #s03 .body { font-family: 'JetBrains Mono', monospace; margin-top: 40px; font-size: 19px; line-height: 1.7; color: #c8e8c0; max-width: 820px; }
+  #s03 .body p + p { margin-top: 16px; }
+  #s03 .body .comment { color: #7fa87f; }
+  #s03 .for-you { color: #7dff7d; border-color: #7dff7d; margin-top: 24px; font-family: 'Inter', sans-serif; }
+  #s03 .cite { margin-top: 40px; font-size: 15px; color: #7fa87f; }
+  @media (max-width: 700px) { #s03 .stat-strip { grid-template-columns: 1fr; } }
+
+  /* ==================== 04 ACADEMIC DROP-CAP ==================== */
+  #s04 { background: #eee4c8; color: #2a2116; }
+  #s04 .rule { border-top: 4px double #2a2116; margin: 8px 0 40px; }
+  #s04 .masthead { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+  #s04 .num { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(140px, 22vw, 340px); text-align: center; line-height: 0.9; margin: 40px 0 20px; color: #2a2116; }
+  #s04 .num em { color: #8a2e13; font-style: italic; }
+  #s04 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 96px); line-height: 1.0; text-align: center; max-width: 1100px; margin: 0 auto; letter-spacing: -0.02em; }
+  #s04 .byline { text-align: center; font-size: 18px; font-style: italic; margin-top: 24px; font-family: 'Fraunces', serif; }
+  #s04 .for-you { display: block; margin: 30px auto; width: max-content; color: #8a2e13; }
+  #s04 .body { max-width: 840px; margin: 50px auto 0; font-size: 22px; line-height: 1.55; column-count: 1; }
+  #s04 .body p { margin-top: 0; text-indent: 0; }
+  #s04 .body p + p { margin-top: 18px; text-indent: 1.8em; }
+  #s04 .body .dropcap::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 7em;
+    float: left;
+    line-height: 0.86;
+    padding: 4px 16px 0 0;
+    color: #8a2e13;
+  }
+  #s04 .takeaway { max-width: 840px; margin: 40px auto 0; font-size: 20px; padding: 28px; border: 2px solid #2a2116; background: transparent; }
+  #s04 .takeaway strong { display: block; letter-spacing: 0.2em; font-size: 15px; text-transform: uppercase; margin-bottom: 10px; font-weight: 800; }
+  #s04 .cite { text-align: center; margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== 05 ROSE ALERT STAMP ==================== */
+  #s05 { background: #f7c9c0; color: #3a0f0a; }
+  #s05 .stamp-row { display: grid; grid-template-columns: auto 1fr; gap: 50px; align-items: flex-start; }
+  #s05 .stamp {
+    border: 6px solid #8a1e0c;
+    color: #8a1e0c;
+    padding: 18px 28px;
+    transform: rotate(-6deg);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  #s05 .section { color: #8a1e0c; margin-left: 0; }
+  #s05 .for-you { color: #8a1e0c; margin-top: 26px; }
+  #s05 .num-headline { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: flex-end; margin-top: 40px; }
+  #s05 .num { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(220px, 34vw, 460px); line-height: 0.8; color: #8a1e0c; letter-spacing: -0.05em; }
+  #s05 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6.5vw, 100px); line-height: 0.96; color: #3a0f0a; padding-bottom: 20px; letter-spacing: -0.02em; }
+  #s05 .body { margin-top: 40px; font-size: 22px; line-height: 1.5; max-width: 820px; }
+  #s05 .body p + p { margin-top: 18px; }
+  #s05 .actions { margin-top: 30px; font-size: 19px; background: #fde6e0; border-left: 5px solid #8a1e0c; padding: 22px 26px; max-width: 820px; }
+  #s05 .actions strong { display: block; color: #8a1e0c; letter-spacing: 0.2em; font-size: 15px; text-transform: uppercase; margin-bottom: 10px; }
+  #s05 .actions ul { list-style: none; padding: 0; }
+  #s05 .actions li { padding: 8px 0; border-bottom: 1px dashed #8a1e0c; }
+  #s05 .actions li:last-child { border-bottom: none; }
+  #s05 .actions li::before { content: "\2192  "; font-weight: 800; color: #8a1e0c; }
+  #s05 .cite { margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: #8a1e0c; }
+  @media (max-width: 800px) { #s05 .num-headline { grid-template-columns: 1fr; gap: 10px; } #s05 .num { font-size: 180px; } #s05 .stamp-row { grid-template-columns: 1fr; } }
+
+  /* ==================== 06 BAUHAUS BLOCK ==================== */
+  #s06 { background: #fbd441; color: #141414; padding: 0; min-height: 100vh; }
+  #s06 .grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; min-height: 100vh; gap: 0; }
+  #s06 .cell { padding: clamp(28px, 4vw, 60px); display: flex; flex-direction: column; justify-content: center; }
+  #s06 .cell-1 { background: #141414; color: #fbd441; }
+  #s06 .cell-1 .section { color: #fbd441; }
+  #s06 .cell-1 .n { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(240px, 30vw, 460px); line-height: 0.82; letter-spacing: -0.05em; }
+  #s06 .cell-2 { background: #d13a2b; color: #fff7ec; }
+  #s06 .cell-2 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5.5vw, 78px); line-height: 0.96; letter-spacing: -0.02em; }
+  #s06 .cell-2 .section { color: #fff7ec; margin-bottom: 20px; }
+  #s06 .cell-2 .for-you { margin-top: 26px; }
+  #s06 .cell-3 { background: #fbd441; color: #141414; }
+  #s06 .cell-3 .body { font-size: 21px; line-height: 1.55; }
+  #s06 .cell-3 .body p + p { margin-top: 18px; }
+  #s06 .cell-4 { background: #2b6ecb; color: #fff7ec; }
+  #s06 .cell-4 .stat { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(120px, 16vw, 220px); line-height: 0.9; letter-spacing: -0.04em; }
+  #s06 .cell-4 .stat-label { font-size: 20px; margin-top: 16px; font-weight: 600; max-width: 340px; line-height: 1.25; }
+  #s06 .cell-4 .cite { margin-top: 30px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; }
+  @media (max-width: 800px) { #s06 .grid { grid-template-columns: 1fr; grid-template-rows: auto; min-height: auto; } #s06 .cell { min-height: 60vh; } }
+
+  /* ==================== 07 NEON ARCADE ==================== */
+  #s07 { background: #0a0a15; color: #ffffff; }
+  #s07 .banner { padding: 20px 28px; background: linear-gradient(90deg, #ff2d6b, #ff8c1a); font-weight: 900; font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0a15; margin: 0 -28px 40px; }
+  #s07 .num-wrap { position: relative; margin: 20px 0; }
+  #s07 .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(240px, 38vw, 520px);
+    line-height: 0.82;
+    background: linear-gradient(180deg, #ff2d6b 0%, #ff8c1a 50%, #ffd84d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.05em;
+    text-shadow: 0 0 60px rgba(255, 45, 107, 0.4);
+  }
+  #s07 .section { color: #ff8c1a; }
+  #s07 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 6vw, 90px); line-height: 0.96; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(255, 140, 26, 0.3); }
+  #s07 .for-you { color: #ffd84d; border-color: #ffd84d; margin-top: 28px; }
+  #s07 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; color: #e8e8f0; }
+  #s07 .body p + p { margin-top: 18px; }
+  #s07 .ticker { margin-top: 40px; padding: 22px; background: #111128; border: 1px solid #ff2d6b; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  #s07 .ticker .symbol { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px; color: #ff8c1a; letter-spacing: 0.12em; }
+  #s07 .ticker .price { font-family: 'Fraunces', serif; font-weight: 900; font-size: 30px; margin-top: 6px; }
+  #s07 .cite { margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: #9a9ab8; }
+  @media (max-width: 700px) { #s07 .ticker { grid-template-columns: 1fr; } }
+
+  /* ==================== 08 NATURALIST JOURNAL ==================== */
+  #s08 { background: #e8ecd9; color: #2a3818; }
+  #s08 .journal-head { border-top: 2px solid #2a3818; border-bottom: 1px solid #2a3818; padding: 16px 0; display: flex; justify-content: space-between; font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; }
+  #s08 .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-top: 60px; align-items: start; }
+  #s08 .num { font-family: 'Fraunces', serif; font-weight: 300; font-style: italic; font-size: clamp(220px, 32vw, 420px); line-height: 0.85; color: #4d6620; letter-spacing: -0.02em; }
+  #s08 .num-caption { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; margin-top: 10px; opacity: 0.75; }
+  #s08 .section { color: #4d6620; margin-bottom: 24px; }
+  #s08 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(46px, 5.8vw, 84px); line-height: 0.98; letter-spacing: -0.02em; }
+  #s08 h2 em { font-style: italic; font-weight: 600; }
+  #s08 .body { margin-top: 36px; font-size: 22px; line-height: 1.6; max-width: 720px; }
+  #s08 .body p + p { margin-top: 18px; }
+  #s08 .factoids { margin-top: 36px; border-top: 1px solid #2a3818; padding-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  #s08 .factoids .f-big { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(40px, 5vw, 72px); line-height: 1; color: #4d6620; }
+  #s08 .factoids .f-label { font-size: 16px; margin-top: 8px; font-style: italic; font-family: 'Fraunces', serif; line-height: 1.25; }
+  #s08 .cite { margin-top: 50px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; }
+  @media (max-width: 800px) { #s08 .grid { grid-template-columns: 1fr; gap: 20px; } #s08 .num { font-size: 180px; } #s08 .factoids { grid-template-columns: 1fr; } }
+
+  /* ==================== 09 BIG STAT FINISH ==================== */
+  #s09 { background: #111214; color: #fff7ec; }
+  #s09 .topline { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(24px, 3vw, 38px); color: #e8c46c; margin-bottom: 28px; }
+  #s09 .monster { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(160px, 26vw, 440px); line-height: 0.86; letter-spacing: -0.05em; }
+  #s09 .monster .pct { color: #e8c46c; }
+  #s09 .monster-sub { font-family: 'Fraunces', serif; font-weight: 700; font-size: clamp(28px, 3.5vw, 56px); margin-top: 20px; line-height: 1.05; max-width: 900px; }
+  #s09 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(44px, 5.8vw, 84px); line-height: 0.96; margin-top: 40px; letter-spacing: -0.02em; }
+  #s09 .body { margin-top: 40px; font-size: 22px; line-height: 1.55; max-width: 820px; }
+  #s09 .body p + p { margin-top: 18px; }
+  #s09 .section { color: #e8c46c; }
+  #s09 .ranked-stats { margin-top: 60px; border-top: 1px solid #3a3a42; padding-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  #s09 .rs .pct-sm { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(42px, 5vw, 72px); line-height: 1; color: #e8c46c; }
+  #s09 .rs .lbl { font-size: 16px; margin-top: 10px; line-height: 1.3; }
+  #s09 .rank-badge { position: absolute; top: 40px; right: 40px; font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(60px, 10vw, 140px); line-height: 1; color: rgba(232, 196, 108, 0.18); pointer-events: none; }
+  #s09 .cite { margin-top: 50px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.75; }
+  @media (max-width: 800px) { #s09 .ranked-stats { grid-template-columns: 1fr 1fr; } #s09 .rank-badge { top: 20px; right: 20px; } }
+
+  /* ==================== 10 MANIFESTO FINALE ==================== */
+  #s10 { background: #f5f1e8; color: #0f0f0f; }
+  #s10 .num { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: clamp(380px, 60vw, 800px); line-height: 0.8; letter-spacing: -0.06em; color: #0f0f0f; }
+  #s10 .section { color: #0f0f0f; }
+  #s10 .tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(28px, 3.5vw, 52px); font-weight: 400; line-height: 1.05; max-width: 1100px; margin-top: 40px; }
+  #s10 h2 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(56px, 8vw, 130px); line-height: 0.94; letter-spacing: -0.03em; margin-top: 36px; max-width: 1200px; }
+  #s10 .rule-break { height: 6px; background: #0f0f0f; margin: 60px 0 40px; max-width: 240px; }
+  #s10 .body { font-size: 24px; line-height: 1.5; max-width: 820px; }
+  #s10 .body p + p { margin-top: 22px; }
+  #s10 .body strong { background: #fbd441; padding: 2px 6px; font-weight: 800; }
+  #s10 .for-you { margin-top: 40px; color: #8a1e0c; border-color: #8a1e0c; }
+  #s10 .cite { margin-top: 50px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* ==================== COLOPHON ==================== */
+  #colophon { background: #0f0f0f; color: #f5f1e8; padding: clamp(40px, 6vw, 100px); text-align: center; }
+  #colophon .wordmark { font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: clamp(48px, 7vw, 120px); line-height: 1; letter-spacing: -0.03em; }
+  #colophon p { font-size: 20px; line-height: 1.55; max-width: 640px; margin: 30px auto; }
+  #colophon .sources { margin-top: 40px; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.75; }
+
+  @media print {
+    .spread { page-break-after: always; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================== COVER =========================== -->
+<section id="cover" class="spread">
+  <div class="flag">
+    <span>Vol. 1 · No. 4</span>
+    <span>Sunday, 16 August 2026</span>
+    <span>Kavi's Desk</span>
+  </div>
+  <h1 class="wordmark">Morning<br><em>Edition</em>.</h1>
+  <p class="subtitle">Washington told its allies to pick a side in the AI race, a 27B open model took the top of Hacker News by a mile, and Anthropic published the paper you paid 1.7 million tokens to learn the hard way.</p>
+
+  <div class="lede-row">
+    <div>
+      <div class="label">On the agenda</div>
+      <div class="hl">The AI supply chain became foreign policy. Walmart and Target report this week and tell you what the shopper is actually doing.</div>
+      <div class="meta">See pages 01 · 07</div>
+    </div>
+    <div>
+      <div class="label">For your inbox</div>
+      <div class="hl">Five stories flagged <em>directly actionable</em> for Tolani Group, ShelfBuddy and the week before Greece.</div>
+      <div class="meta">Look for the <strong>FOR YOU</strong> stamp.</div>
+    </div>
+    <div>
+      <div class="label">And, because you asked</div>
+      <div class="hl">Diamond melts colder than anyone thought. Capybaras walked into a Brazilian parliament. Two black holes are closing in on each other.</div>
+      <div class="meta">Weird science · page 08</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Assembled 12:45 London · 16 Aug 2026</span>
+    <span>Read in ~12 minutes</span>
+  </div>
+</section>
+
+<!-- =========================== 01 HERO =========================== -->
+<section id="s01" class="spread">
+  <div class="rank" aria-hidden="true">01</div>
+  <div class="label section">Front page · Geopolitics · Supply chain</div>
+  <div class="kicker">Which AI vendor a business uses stopped being a procurement decision this week. It is now a foreign policy position.</div>
+  <h2>Washington told its allies to <em>pick a side</em> in the AI race.</h2>
+  <div class="body">
+    <p>The United States has warned allied nations to side with it against China on AI or face consequences. That is the blunt version, and the softer versions arriving alongside it are more revealing. The Trump administration is pressuring Apple not to buy Chinese memory chips while AI data centres drain the global supply. SK hynix is breaking ground on a $3.9bn fab in Indiana. Apple, meanwhile, has trained a custom model for the China market with help from Alibaba, which is precisely the sort of hedge the warning is aimed at.</p>
+    <p>The New York Times filed the counterweight on the same day: the US military wants AI dominance, and internal feuds plus Chinese progress may thwart it. Two stories, one admission. The people issuing the ultimatum are not confident they are winning.</p>
+    <p>Underneath the geopolitics sits a physical constraint that nobody has legislated away. Memory is short, data centres are eating it, and every device with a chip in it competes for the same wafers. Pressure is also mounting for the data centre operators to share the profits with the places carrying the load, which is a fight about electricity dressed up as a fight about tax.</p>
+  </div>
+  <div class="takeaway">
+    <strong>What it means for your day</strong>
+    Two things land on a consultancy desk. First, component cost inflation is back on the table for any client whose product has electronics in it, and the honest 2027 planning line is a range, not a number. Second, and sooner: procurement questionnaires are about to start asking which country trained the model behind the tool you are recommending. Have the answer for the AI stack you put in front of clients before somebody's legal team asks for it. That is a one-page annex, not a project.
+  </div>
+  <div class="footer-bar">
+    <span><a href="https://www.reddit.com/r/technology/comments/1vpimta/us_warns_allied_nations_side_with_us_in_the_ai/" target="_blank" rel="noopener">The ultimatum</a> · <a href="https://www.nytimes.com/2026/08/16/us/politics/military-ai-china-anthropic.html" target="_blank" rel="noopener">NYT: the military's AI problem</a></span>
+    <span><a href="https://www.reddit.com/r/stocks/comments/1vpaowi/apple_has_a_plan_to_fix_its_memory_chip_problem/" target="_blank" rel="noopener">Apple's memory problem</a> · <a href="https://www.nytimes.com/2026/08/16/business/ai-data-centers.html" target="_blank" rel="noopener">NYT: sharing the data centre profits</a></span>
+  </div>
+</section>
+
+<!-- =========================== 02 MIDNIGHT =========================== -->
+<section id="s02" class="spread">
+  <div class="grid">
+    <div class="rank-block">
+      <div class="n" aria-hidden="true">02</div>
+      <div class="caption">1,388 points and no press release</div>
+    </div>
+    <div class="content">
+      <div class="label section">AI · Tools · Read this first</div>
+      <h2>Qwen 3.8 27B went to the top of Hacker News with nothing but a model card.</h2>
+      <span class="for-you">For You</span>
+      <div class="body">
+        <p>Qwen3.8-27B in FP8 landed on Hugging Face and pulled 1,388 points, more than double the next story on the front page. No launch event, no blog tour, no waitlist. A weights file and a table of numbers. Twenty-seven billion parameters in eight-bit precision is small enough to run on hardware you can buy rather than rent, which is the whole point of the reaction.</p>
+        <p>The pattern is now stable enough to plan around. Frontier-adjacent capability keeps arriving as open weights, announced by a file, and the gap between it and the paid frontier is narrowing on exactly the work that is mechanical: reformatting, extracting, drafting to a template, summarising a corpus. That is not the work you need judgement for. It is the work you need volume for.</p>
+      </div>
+      <div class="takeaway">
+        <strong>Action this week</strong>
+        The Tolani content library is a volume problem, not a judgement problem, and the overnight run is where volume belongs. Split it properly: an open model does the first pass on guides, PDF bodies and workshop handouts overnight; Claude does the voice pass and the commercial argument in the morning, where being wrong is expensive. Measure cost per finished asset across one week and let the number decide, not the habit.
+      </div>
+      <div class="cite">
+        <a href="https://huggingface.co/Qwen/Qwen3.8-27B-FP8" target="_blank" rel="noopener">huggingface.co</a> · 1,388 pts · <a href="https://news.ycombinator.com/item?id=49299605" target="_blank" rel="noopener">the thread</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 03 TERMINAL =========================== -->
+<section id="s03" class="spread">
+  <div class="terminal-bar">
+    <span class="dot" style="background:#ff5f56"></span>
+    <span class="dot" style="background:#ffbd2e"></span>
+    <span class="dot" style="background:#27c93f"></span>
+    <span class="title">morning-edition · bash · 12:45</span>
+  </div>
+  <div class="terminal-body">
+    <div class="prompt-line">cat anthropic/research/multiagent-systems</div>
+    <div class="num" aria-hidden="true">03</div>
+    <h2>Anthropic published the multi-agent lesson you already bought at full price.</h2>
+    <div class="stat-strip">
+      <div><div class="stat-big">107</div><div class="stat-label">points on the multi-agent paper</div></div>
+      <div><div class="stat-big">$11.5bn</div><div class="stat-label">Anthropic's reported Q2 revenue</div></div>
+      <div><div class="stat-big">1.7m</div><div class="stat-label">tokens your July fleet burned</div></div>
+    </div>
+    <div class="body">
+      <p><span class="comment"># what landed</span><br>
+      Anthropic's research team put out "Patterns and problems in emerging multi-agent systems". It is a catalogue of how agent fleets fail in practice: coordination overhead, duplicated work, agents waiting on agents, and cost that scales with the number of participants rather than the size of the job. Separately, the company's second-quarter revenue is reported at more than $11.5bn, roughly the number you would expect when everybody is running fleets.</p>
+      <p><span class="comment"># why this is not abstract for you</span><br>
+      In July, ninety-seven outreach files became ninety-seven rewrite agents plus ninety-seven verifiers. One hundred and thirty-two agents, 1.7 million tokens, the session limit hit mid-run, and a half-rewritten corpus sitting on disk until the reset. The paper describes that failure in the general case. You have the specific case in your own logs.</p>
+      <p><span class="comment"># the rule that came out of it</span><br>
+      Batch, do not fan out. Ten items per agent, not one. Set the model explicitly on every agent rather than inheriting the expensive default. Verify with a script over the output, not with a second fleet. Read the paper on the plane if you like, but the rule is already written down and it cost real money to learn.</p>
+    </div>
+    <span class="for-you">For You</span>
+    <div class="cite"><a href="https://www.anthropic.com/research/multiagent-systems" target="_blank" rel="noopener">anthropic.com/research</a> · 107 pts · <a href="https://www.reddit.com/r/technology/comments/1vpie9t/anthropic_revenue_reportedly_jumps_to_more_than/" target="_blank" rel="noopener">the revenue report</a></div>
+  </div>
+</section>
+
+<!-- =========================== 04 ACADEMIC DROP-CAP =========================== -->
+<section id="s04" class="spread">
+  <div class="masthead">
+    <span>The Primary Papers</span>
+    <span>16 August 2026</span>
+    <span>Page 04</span>
+  </div>
+  <div class="rule"></div>
+  <div class="num" aria-hidden="true"><em>IV.</em></div>
+  <div class="label" style="text-align:center; letter-spacing:0.25em;">US politics · The insurgency</div>
+  <h2>The Democratic Party is having its Tea Party moment, and the money is losing.</h2>
+  <div class="byline">Filed from the New York Times and the primary wires, 16 August 2026</div>
+  <div class="body">
+    <p class="dropcap">Peggy Flanagan, running from the progressive left, beat Angie Craig in the Minnesota Senate primary. Craig had AIPAC money behind her. That result did not arrive alone: the Democratic National Committee has voted to back eliminating ICE while the administration expands deportations, and the party has finalised South Carolina as the first contest of the 2028 presidential calendar, pushing Iowa and New Hampshire back.</p>
+    <p>The New York Times is asking directly whether this is the Democrats' own Tea Party moment. The comparison is useful precisely because of how the Republican version ended. An insurgent wing with real energy wins primaries, changes what the party is allowed to say, and then discovers that the seats it wins are not always the seats it needs. The Times notes the obvious limitation in the same breath: candidates of the activist left typically underperform other Democrats in general elections.</p>
+    <p>Watch what the establishment does rather than what it says. The calendar change is the tell. Moving South Carolina to the front is a structural bet on a different electorate deciding the nominee, made by people who can read the same primary results everybody else can.</p>
+  </div>
+  <div class="takeaway">
+    <strong>The commercial read</strong>
+    Brand teams selling into the US spent 2024 and 2025 learning to say nothing. What is shifting is not the volume of political noise but its unpredictability: the positions a party will defend are now set in primaries rather than committee rooms, and they move fast. For any client planning US activation into 2027, the useful counsel is boring and correct. Anchor the brand in the product, keep the political surface area small, and build the sign-off path now rather than in the week you need it.
+  </div>
+  <div class="cite"><a href="https://www.nytimes.com/2026/08/16/us/politics/democratic-party-tea-party-moment.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://www.reddit.com/r/politics/comments/1vpnvl0/progressive_democrat_peggy_flanagan_defeats/" target="_blank" rel="noopener">the Minnesota result</a> · <a href="https://www.reddit.com/r/politics/comments/1vpeb1q/dnc_votes_to_back_eliminating_ice_as_trump/" target="_blank" rel="noopener">the DNC vote</a></div>
+</section>
+
+<!-- =========================== 05 ROSE ALERT =========================== -->
+<section id="s05" class="spread">
+  <div class="stamp-row">
+    <div class="stamp">Seven days to Greece</div>
+    <div>
+      <div class="label section">Infrastructure · Your stack</div>
+      <span class="for-you">For You</span>
+    </div>
+  </div>
+  <div class="num-headline">
+    <div class="num" aria-hidden="true">05</div>
+    <h2>Mastercard went down globally because somebody shipped an update.</h2>
+  </div>
+  <div class="body">
+    <p>Mastercard payments were declined worldwide after a system update caused a global outage. Not an attack. Not a fraud wave. A deployment. The most heavily engineered payment network on earth failed the same way a Netlify build fails, and for a few hours the card in your pocket was a piece of plastic.</p>
+    <p>The other alert on the wire is worse and quieter. A screen-sharing vulnerability that gives attackers full control of Macs is under active exploitation, letting a remote attacker log in without a password. Under active exploitation means it is being used now, on real machines, not theorised in a paper.</p>
+    <p>Both matter more than usual this week because the family flies to Greece on the 23rd, and a payment network that can fail on a Sunday afternoon in London can also fail on a Tuesday evening in Athens. Redundancy is cheap when you arrange it in advance and impossible to arrange when you need it.</p>
+  </div>
+  <div class="actions">
+    <strong>Before the 23rd, in about forty minutes total</strong>
+    <ul>
+      <li>Carry a second card on a different network, Visa if the primary is Mastercard, and a small cash float; check both cards have travel notifications set</li>
+      <li>Update every Mac, iPhone and iPad in the house this weekend, including the girls' devices, before the screen-sharing exploit gets packaged</li>
+      <li>Download the flights, villa booking, insurance documents and passport scans for offline access rather than trusting hotel wifi and a live app</li>
+      <li>Both insurance renewals land 18 and 19 August, inside the working week before the trip; do them Monday, not Friday</li>
+    </ul>
+  </div>
+  <div class="cite"><a href="https://www.reddit.com/r/technology/comments/1vp9jxc/mastercard_payments_declined_due_to_global_outage/" target="_blank" rel="noopener">the Mastercard outage</a> · <a href="https://arstechnica.com/security/2026/08/vulnerability-giving-attackers-full-control-of-macs-is-under-active-exploitation/" target="_blank" rel="noopener">arstechnica.com: the Mac exploit</a></div>
+</section>
+
+<!-- =========================== 06 BAUHAUS =========================== -->
+<section id="s06" class="spread">
+  <div class="grid">
+    <div class="cell cell-1">
+      <div class="label section">Issue 06 · The exit queue</div>
+      <div class="n" aria-hidden="true">06</div>
+    </div>
+    <div class="cell cell-2">
+      <div class="label section">OpenAI</div>
+      <h2>Two executives gone in one week, and an $80 button to undo your own throttle.</h2>
+    </div>
+    <div class="cell cell-3">
+      <div class="label section">What's happening</div>
+      <div class="body">
+        <p>Denise Dresser, who joined as chief revenue officer in December after running Slack, is leaving in the coming weeks. She is the second executive out this week. Commentators are calling the wider talent exodus a red flag ahead of the IPO, which is the kind of sentence that gets written whether or not it is true, and gets quoted either way.</p>
+        <p>Meanwhile the product is doing something interesting. OpenAI is testing an $80 button that un-throttles the plan you have already paid for, and previewing GPT-5.6 Sol as the next generation. Charging a second time to remove a limit you did not know you had bought is a pricing decision that tells you more about the revenue pressure than any departure does.</p>
+        <p>The lesson travels. When a supplier starts monetising the restriction rather than the capability, the relationship has changed and the renewal conversation should change with it. Worth watching, not worth switching over.</p>
+      </div>
+    </div>
+    <div class="cell cell-4">
+      <div class="stat">$80</div>
+      <div class="stat-label">to remove the throttle on a subscription you already pay for, currently in testing</div>
+      <div class="cite"><a href="https://www.theverge.com/ai-artificial-intelligence/979815/openai-denise-dresser-leaving-executive-departure" target="_blank" rel="noopener">theverge.com</a> · <a href="https://www.reddit.com/r/OpenAI/comments/1vpqfxj/openai_is_testing_an_80_button_to_unthrottle_the/" target="_blank" rel="noopener">the $80 button</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 07 NEON ARCADE =========================== -->
+<section id="s07" class="spread">
+  <div class="banner">Markets · Week ahead · 16 Aug 2026</div>
+  <div class="label section">Wall Street · The shopper report</div>
+  <div class="num-wrap"><div class="num" aria-hidden="true">07</div></div>
+  <h2>Walmart and Target report this week. That is the only FMCG number that matters.</h2>
+  <span class="for-you">For You</span>
+  <div class="body">
+    <p>MarketWatch frames the week correctly: earnings from the two big US retailers are about to reveal the actual health of the American consumer in an era of persistent inflation. Everything else on the tape this week is commentary. This is measurement. Basket size, trip frequency, private label mix and promotional depth are the four lines that tell you whether the shopper is trading down or simply buying less, and those are the same four lines every brand plan for 2027 is quietly assuming.</p>
+    <p>Elsewhere in the market's mood: r/stocks is trying to work out why Buffett and Abel are aggressively accumulating Google and none of the other hyperscalers, which is a better question than most sell-side notes. The Los Angeles Lakers changed hands at a $12.5bn valuation, eclipsing the $10bn record set just last year. Korean retail traders are nursing heavy losses after a brutal correction, with one telling the BBC he lost $14,000 in a month. And SK hynix breaks ground on that Indiana fab, which is page 01 wearing a hard hat.</p>
+    <p>No GameStop read again today. The fetcher ran the anonymous Reddit route, and r/GME, r/Superstonk and r/wallstreetbets all came back empty. See the colophon; this one has a fix and it takes ten minutes.</p>
+  </div>
+  <div class="ticker">
+    <div><div class="symbol">WMT + TGT · REPORTING</div><div class="price">This week</div></div>
+    <div><div class="symbol">LAKERS · SALE VALUATION</div><div class="price">$12.5bn</div></div>
+    <div><div class="symbol">SK HYNIX · INDIANA FAB</div><div class="price">$3.9bn</div></div>
+  </div>
+  <div class="cite"><a href="https://www.marketwatch.com/story/walmart-and-target-are-about-to-reveal-the-health-of-the-u-s-consumer-d5b89491" target="_blank" rel="noopener">marketwatch.com</a> · <a href="https://www.nytimes.com/2026/08/15/business/sports-team-values-billionaires.html" target="_blank" rel="noopener">nytimes.com: sports valuations</a> · <a href="https://www.reddit.com/r/stocks/comments/1vpgr1i/why_is_buffet_abel_aggressively_accumulating_so/" target="_blank" rel="noopener">the Google question</a></div>
+</section>
+
+<!-- =========================== 08 NATURALIST =========================== -->
+<section id="s08" class="spread">
+  <div class="journal-head">
+    <span><em>The Morning Naturalist</em> · Field Dispatch</span>
+    <span>Entry no. 08 · Things under pressure</span>
+  </div>
+  <div class="grid">
+    <div>
+      <div class="num" aria-hidden="true">08</div>
+      <div class="num-caption">the hardest thing we know, melting</div>
+    </div>
+    <div>
+      <div class="label section">Weird science · Matter</div>
+      <h2>Diamond melts at <em>7,300 K</em>, and it turns out we had the number wrong.</h2>
+      <div class="body">
+        <p>Squeeze diamond to three times the pressure at the centre of the Earth and it melts at about 7,300 kelvin. That is cooler than earlier experiments suggested, and the new figure finally agrees with what quantum mechanics predicted all along. Two decades of laboratory results were quietly off, and the theory was quietly right.</p>
+        <p>That is the good version of science and it almost never makes the front page. Nobody discovered anything spectacular. Somebody built a better instrument, ran the measurement again, and moved a number a few hundred degrees. The headline is boring. The implication, that the interiors of large planets are made of something slightly different to what the textbooks say, is not.</p>
+        <p>Elsewhere in things we measured better this week: the James Webb telescope has found a galaxy holding three supermassive black holes, two of them locked in a tight spiral on the cusp of merging. And in Mato Grosso, capybaras wandered into the state legislature, where they were reported to have behaved politely throughout.</p>
+      </div>
+      <div class="factoids">
+        <div><div class="f-big">3x</div><div class="f-label">Earth's core pressure, the condition under which the diamond melted</div></div>
+        <div><div class="f-big">2</div><div class="f-label">supermassive black holes closing on a merger, in a galaxy that holds three</div></div>
+        <div><div class="f-big">0</div><div class="f-label">incidents caused by the capybaras during their visit to parliament</div></div>
+      </div>
+      <div class="cite"><a href="https://www.reddit.com/r/science/comments/1vpffwf/diamond_melts_at_about_7300_k_when_compressed_to/" target="_blank" rel="noopener">the diamond result</a> · <a href="https://www.nytimes.com/2026/08/12/science/space/james-webb-telescope-black-holes-merging.html" target="_blank" rel="noopener">nytimes.com: the black holes</a> · <a href="https://www.nytimes.com/2026/08/06/world/americas/capybara-brazil-legislature.html" target="_blank" rel="noopener">the capybaras</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== 09 BIG STAT FINISH =========================== -->
+<section id="s09" class="spread">
+  <div class="rank-badge" aria-hidden="true">09</div>
+  <div class="topline">From the New York Times science desk, filed this week.</div>
+  <div class="monster">16 <span class="pct">viruses.</span></div>
+  <div class="monster-sub">Scientists trained a model on libraries of DNA, asked it for recipes for viral genomes, and sixteen of them worked.</div>
+
+  <div class="label section" style="margin-top: 48px;">AI · Out of the text box</div>
+  <h2>The models stopped writing about the world and started writing into it.</h2>
+  <div class="body">
+    <p>Sixteen viable viruses, generated by a model, not found in nature. The framing everyone reaches for is the biosecurity one, and it is fair. The framing that matters commercially is different: generative models have crossed out of documents and into artefacts that behave. A genome is a specification that executes itself in a cell. That is a shorter distance from a marketing brief than anyone is comfortable admitting.</p>
+    <p>Two smaller items point the same way. Researchers used AI assistance to port a 250,000 line legacy weather simulation to GPUs, which is the sort of unglamorous, decade-long project that used to justify a department. And a piece arguing that AI's real advantage over the human brain is working memory rather than intelligence pulled 510 points, because it explains what everybody has noticed: these systems are not smarter than you, they simply hold more of the problem at once.</p>
+    <p>Which is exactly why they eat the tasks that are large but not deep. Hold that thought until page 10.</p>
+  </div>
+
+  <div class="ranked-stats">
+    <div class="rs"><div class="pct-sm">16</div><div class="lbl">AI-designed viral genomes that proved viable</div></div>
+    <div class="rs"><div class="pct-sm">250k</div><div class="lbl">lines of legacy weather code ported to GPUs with AI assistance</div></div>
+    <div class="rs"><div class="pct-sm">510</div><div class="lbl">points for the argument that the edge is working memory, not intelligence</div></div>
+    <div class="rs"><div class="pct-sm">7,700</div><div class="lbl">employees in the study finding remote workers report the highest well-being</div></div>
+  </div>
+  <div class="cite"><a href="https://www.nytimes.com/2026/08/06/science/ai-viruses-bacteria-arc.html" target="_blank" rel="noopener">nytimes.com</a> · <a href="https://arxiv.org/abs/2608.13122" target="_blank" rel="noopener">arxiv.org: the GPU port</a> · <a href="https://davidepiffer.com/p/ai-isnt-outthinking-mathematicians" target="_blank" rel="noopener">the working memory argument</a> · 510 pts</div>
+</section>
+
+<!-- =========================== 10 MANIFESTO =========================== -->
+<section id="s10" class="spread">
+  <div class="label section">Final page · Read slowly</div>
+  <div class="num" aria-hidden="true">10.</div>
+  <div class="tagline">The Verge is running a game where you play the chatbot and try to bore a human. It is called Your AI Slop Bores Me, and it is the most accurate piece of market research published this week:</div>
+  <h2>Everything it writes sounds the same. That is the whole opportunity.</h2>
+  <span class="for-you">For You</span>
+  <div class="rule-break"></div>
+  <div class="body">
+    <p>Two tabs. One person writes a request, the other answers it while pretending to be an AI. The joke works because the tell is so easy to hit. Hedged, symmetrical, agreeable, structurally identical every time. Everyone recognises it instantly, which means everyone recognises it in the content they are being sold.</p>
+    <p>The evidence stacked up all week. On r/artificial, the top complaint is that everything AI writes sounds the same, and someone has shipped a markdown format purely to give an agent an actual personality. A Verge reporter took apart an AI-generated film and reported that the best parts were all human. Zuckerberg is betting Meta's entire advertising business on AI creative while his own generative tools turn dresses into pants.</p>
+    <p>Here is the uncomfortable part, and it is aimed at the overnight content sprint. Volume is now free, so <strong>volume is now worthless</strong>. A library of forty polished, correct, unmistakably generated PDFs is not an asset. It is a liability with a download button, because it teaches every prospect that Tolani Group sounds like everyone else. Distinctive and rough beats polished and forgettable. You already believe this. The production line has to believe it too.</p>
+    <p>So the constraint on the sprint is not how many assets get made overnight. It is that <strong>nothing ships without a voice pass</strong>: a real number from seventeen years in FMCG, an opinion somebody could disagree with, and one line that no model would have written because it did not sit through that launch. The machine does the volume. You do the part that is expensive to fake.</p>
+  </div>
+  <div class="cite"><a href="https://www.theverge.com/entertainment/980502/roleplay-as-an-ai-chatbot" target="_blank" rel="noopener">theverge.com: Your AI Slop Bores Me</a> · <a href="https://www.reddit.com/r/artificial/comments/1vps9gq/everything_ai_writes_sounds_the_same_someone_made/" target="_blank" rel="noopener">the sameness problem</a> · <a href="https://www.theverge.com/entertainment/977994/higgsfield-ai-cully-hill-boys-black-list" target="_blank" rel="noopener">inside an AI movie</a></div>
+</section>
+
+<!-- =========================== COLOPHON =========================== -->
+<section id="colophon">
+  <div class="wordmark">— fin. —</div>
+  <p>The Morning Edition is assembled from the Hacker News front page, Lobste.rs, Reddit and selected news wires. Ten stories. No small fonts. No kittens. No sponsored slots.</p>
+  <p>Today's fetch ran the anonymous Atom route into Reddit, which paces at one request every twenty seconds and landed six of twelve subreddits: artificial, OpenAI, politics, stocks, science and technology. LocalLLaMA, singularity, wallstreetbets, Superstonk, GME and Futurology returned nothing, which is why there is no GameStop read for the third issue running. The fix is not a better user agent, it is two environment variables. Register a script app at reddit.com/prefs/apps, set REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET, and the fetcher switches itself to the OAuth route: all twelve subs, every run, with scores and comment counts restored. Ten minutes, once. Lobste.rs is still serving an expired certificate and was skipped again.</p>
+  <p>Reddit stories carry no point totals in this issue because the Atom feed does not provide them, and inventing numbers is worse than omitting them. If a story carries the <strong>FOR YOU</strong> stamp, the curator believes it has a direct bearing on ShelfBuddy, Tolani Group, or your week. Five carry it this morning.</p>
+  <div class="sources">Sources · Hacker News · BBC · New York Times · Ars Technica · The Verge · MarketWatch · Reddit · Anthropic · Qwen · arXiv</div>
+</section>
+
+</body>
+</html>
